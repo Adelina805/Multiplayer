@@ -1,6 +1,8 @@
 using DilmerGames.Core.Singletons;
 using Unity.Netcode;
 
+//test
+
 public class PlayersManager : NetworkSingleton<PlayersManager>
 {
     NetworkVariable<int> playersInGame = new NetworkVariable<int>();

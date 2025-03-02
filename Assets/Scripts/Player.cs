@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using Cinemachine;
 
-// test for unity
+//test
 
 public class Player : NetworkBehaviour
 {

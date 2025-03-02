@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
+//test
+
 public class NetworkPhysicsObject : NetworkBehaviour
 {
     public Rigidbody rb;
