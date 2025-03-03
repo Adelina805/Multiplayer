@@ -13,7 +13,7 @@ public class Player : NetworkBehaviour
     [SerializeField] private Color color;
     
     [SerializeField] private CinemachineVirtualCamera camera;
-    [SerializeField] private Transform cameraHolder; // New empty GameObject to hold the camera
+    [SerializeField] private Transform cameraHolder;
 
     private Rigidbody rb;
     private Renderer renderer;
@@ -31,11 +31,11 @@ public class Player : NetworkBehaviour
         renderer = GetComponentInChildren<Renderer>();
         renderer.material.color = color;
         rb.freezeRotation = true;
-        
+
         if (IsOwner)
         {
-            Cursor.lockState = CursorLockMode.Locked; // Lock cursor to screen center
-            Cursor.visible = false; // Hide cursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
@@ -54,6 +54,18 @@ public class Player : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return; // Only allow movement for the local player
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape key pressed!"); // Check if Escape is detected
+            ToggleCursor();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Delete))
+        {
+            Debug.Log("Delete key pressed!"); // Check if Delete is detected
+            ToggleCursor();
+        }
 
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
@@ -90,4 +102,17 @@ public class Player : NetworkBehaviour
         Debug.Log(rb.velocity.y);
     }
 
+    private void ToggleCursor()
+    {
+        if (Cursor.lockState == CursorLockMode.Locked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
 }
