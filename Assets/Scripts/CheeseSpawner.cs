@@ -6,7 +6,7 @@ using UnityEngine;
 public class CheeseSpawner : NetworkBehaviour
 {
     [SerializeField] private GameObject cheesePrefab; // Assign Cheese prefab in Inspector
-    [SerializeField] private int cheeseCount = 10; // Number of cheese objects to spawn
+    [SerializeField] private int cheeseCount = 0; // Number of cheese objects to spawn
     [SerializeField] private Vector3 spawnArea = new Vector3(10f, 1f, 10f); // Define spawn area size
 
     public override void OnNetworkSpawn()
