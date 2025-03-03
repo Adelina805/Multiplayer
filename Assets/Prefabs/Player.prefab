@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 3146192627030457810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -118,7 +118,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 84
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!136 &5638560776948539507
 CapsuleCollider:
@@ -127,7 +127,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3146192627030457810}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 8a5774381a91849778084ed1c2ead2c2, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -245,12 +245,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48874d4ce1b9e4788ada2e34baaef1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  mouseSensitivity: 20
+  speed: 5
+  mouseSensitivity: 1000
   inputNameHorizontal: Horizontal
   inputNameVertical: Vertical
   color: {r: 0.08940014, g: 0.29957336, b: 0.46226418, a: 1}
   camera: {fileID: 1043100413201597162}
+  cameraHolder: {fileID: 2265830528367767855}
 --- !u!1 &3157858439592873413
 GameObject:
   m_ObjectHideFlags: 0

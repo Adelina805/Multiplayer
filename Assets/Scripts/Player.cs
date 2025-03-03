@@ -6,13 +6,14 @@ using Cinemachine;
 
 public class Player : NetworkBehaviour
 {
-    [SerializeField] private float speed = 5f;
-    [SerializeField] private float mouseSensitivity = 100f;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float mouseSensitivity = 1000f;
     [SerializeField] private string inputNameHorizontal;
     [SerializeField] private string inputNameVertical;
     [SerializeField] private Color color;
     
     [SerializeField] private CinemachineVirtualCamera camera;
+    [SerializeField] private Transform cameraHolder; // New empty GameObject to hold the camera
 
     private Rigidbody rb;
     private Renderer renderer;
@@ -29,6 +30,7 @@ public class Player : NetworkBehaviour
         rb = GetComponent<Rigidbody>();
         renderer = GetComponentInChildren<Renderer>();
         renderer.material.color = color;
+        rb.freezeRotation = true;
         
         if (IsOwner)
         {
@@ -60,14 +62,15 @@ public class Player : NetworkBehaviour
         mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Rotate the player left and right
-        transform.Rotate(Vector3.up * mouseX);
+        // Rotate the player left and right (yaw)
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(0, mouseX, 0));
 
-        // Rotate the camera up and down
+
+        // Rotate the camera up and down (pitch)
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Prevents flipping
 
-        camera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        cameraHolder.localRotation = Quaternion.Euler(xRotation, 0f, 0f); // Rotate only the camera
     }
 
     private void FixedUpdate()
@@ -75,11 +78,16 @@ public class Player : NetworkBehaviour
         if (!IsOwner) return;
 
         Vector3 moveDirection = transform.forward * inputVertical + transform.right * inputHorizontal;
-    
-        rb.velocity = new Vector3(moveDirection.x * speed, rb.velocity.y - 9.81f * Time.fixedDeltaTime, moveDirection.z * speed);
 
-        Debug.Log($"Velocity Y: {rb.velocity.y}");
+        if (moveDirection.magnitude > 1)
+        {
+            moveDirection.Normalize();
+        }
 
+        // Apply movement while preserving gravity
+        rb.velocity = new Vector3(moveDirection.x * speed, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, moveDirection.z * speed);
+
+        Debug.Log(rb.velocity.y);
     }
 
 }
