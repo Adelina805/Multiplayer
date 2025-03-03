@@ -34,6 +34,7 @@ public class Player : NetworkBehaviour
 
         if (IsOwner)
         {
+            Debug.Log("IsOwner: " + IsOwner);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
@@ -58,12 +59,6 @@ public class Player : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Escape key pressed!"); // Check if Escape is detected
-            ToggleCursor();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Delete))
-        {
-            Debug.Log("Delete key pressed!"); // Check if Delete is detected
             ToggleCursor();
         }
 
