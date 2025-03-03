@@ -6,8 +6,8 @@ using Cinemachine;
 
 public class Player : NetworkBehaviour
 {
-    [SerializeField] private float speed = 10f;
-    [SerializeField] private float mouseSensitivity = 1000f;
+    [SerializeField] private float speed;
+    [SerializeField] private float mouseSensitivity;
     [SerializeField] private string inputNameHorizontal;
     [SerializeField] private string inputNameVertical;
     [SerializeField] private Color color;
