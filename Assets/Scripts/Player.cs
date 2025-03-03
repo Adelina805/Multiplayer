@@ -4,8 +4,6 @@ using Unity.Netcode;
 using UnityEngine;
 using Cinemachine;
 
-//test
-
 public class Player : NetworkBehaviour
 {
     [SerializeField] private float speed;
@@ -21,11 +19,21 @@ public class Player : NetworkBehaviour
     private float inputHorizontal;
     private float inputVertical;
 
+// // trying to get camera to move
+    public float sensX;
+    public float sensY;
+    public Transform orientation;
+    public float xRotation;
+    public float yRotation;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         renderer = GetComponentInChildren<Renderer>();
         renderer.material.color = color;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public override void OnNetworkSpawn()
@@ -43,10 +51,25 @@ public class Player : NetworkBehaviour
     {
         if (!IsOwner) return; // Only allow movement for the local player
 
-            inputHorizontal = Input.GetAxisRaw("Horizontal");
-            inputVertical = Input.GetAxisRaw("Vertical");
+        inputHorizontal = Input.GetAxisRaw("Horizontal");
+        inputVertical = Input.GetAxisRaw("Vertical");
 
         Debug.Log($"Player {OwnerClientId}: Horizontal={inputHorizontal}, Vertical={inputVertical}");
+
+        //get mouse input
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+
+        Debug.Log($"Mouse Input: Horizontal = {mouseX}, Vertical={mouseY}");
+
+        yRotation += mouseX;
+        xRotation -= mouseY;
+
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        //rotate camera and orientation
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
     private void FixedUpdate()

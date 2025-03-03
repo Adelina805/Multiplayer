@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-//test
-
 public class CheeseSpawner : NetworkBehaviour
 {
     [SerializeField] private GameObject cheesePrefab; // Assign Cheese prefab in Inspector
