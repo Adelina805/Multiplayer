@@ -41,6 +41,9 @@ public class Player : NetworkBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
+
+        Application.targetFrameRate = 60; // Lock to 60 FPS
+        Physics.gravity = new Vector3(0, -30f, 0); // Adjust for snappier jumps
     }
 
     public override void OnNetworkSpawn()
@@ -72,9 +75,9 @@ public class Player : NetworkBehaviour
         {
             Debug.Log("Jump!");
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Reset vertical velocity
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Instant jump force
+            rb.AddForce(Vector3.up * jumpForce / Time.fixedDeltaTime, ForceMode.Impulse);
         }
-
+        
         if (!IsGrounded()) 
         {
             Debug.Log("is not on da ground");

@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 100
+  jumpForce: 3
   mouseSensitivity: 500
   inputNameHorizontal: Horizontal
   inputNameVertical: Vertical
