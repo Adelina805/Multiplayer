@@ -1344,7 +1344,7 @@ GameObject:
   - component: {fileID: 1163653138}
   - component: {fileID: 1163653137}
   - component: {fileID: 1163653136}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1915,13 +1915,13 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1967284915}
+  - {fileID: 1648554172}
+  - {fileID: 394537635}
+  - {fileID: 969133796}
   - {fileID: 1130628143}
   - {fileID: 705507995}
-  - {fileID: 1648554172}
   - {fileID: 1163653135}
   - {fileID: 834210426}
   - {fileID: 57798243}
-  - {fileID: 1967284915}
   - {fileID: 295601118}
-  - {fileID: 969133796}
-  - {fileID: 394537635}

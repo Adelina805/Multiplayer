@@ -7,6 +7,7 @@ using Cinemachine;
 public class Player : NetworkBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float jumpForce; // Jump power
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private string inputNameHorizontal;
     [SerializeField] private string inputNameVertical;
@@ -14,6 +15,8 @@ public class Player : NetworkBehaviour
     
     [SerializeField] private CinemachineVirtualCamera camera;
     [SerializeField] private Transform cameraHolder;
+    [SerializeField] private Transform groundCheck; // Empty object at player's feet
+    [SerializeField] private LayerMask groundLayer; // Assign ground layer in Inspector
 
     private Rigidbody rb;
     private Renderer renderer;
@@ -58,12 +61,25 @@ public class Player : NetworkBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("Escape key pressed!"); // Check if Escape is detected
+            Debug.Log("Escape key pressed!"); 
             ToggleCursor();
         }
 
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+        {
+            Debug.Log("Jump!");
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Reset vertical velocity
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Instant jump force
+        }
+
+        if (!IsGrounded()) 
+        {
+            Debug.Log("is not on da ground");
+            rb.AddForce(Vector3.down * 5f, ForceMode.Acceleration); // Faster fall
+        }
 
         // Mouse look
         mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
@@ -71,7 +87,6 @@ public class Player : NetworkBehaviour
 
         // Rotate the player left and right (yaw)
         rb.MoveRotation(rb.rotation * Quaternion.Euler(0, mouseX, 0));
-
 
         // Rotate the camera up and down (pitch)
         xRotation -= mouseY;
@@ -91,10 +106,12 @@ public class Player : NetworkBehaviour
             moveDirection.Normalize();
         }
 
-        // Apply movement while preserving gravity
-        rb.velocity = new Vector3(moveDirection.x * speed, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, moveDirection.z * speed);
+        rb.velocity = new Vector3(moveDirection.x * speed, rb.velocity.y, moveDirection.z * speed);
+    }
 
-        Debug.Log(rb.velocity.y);
+    private bool IsGrounded()
+    {
+        return Physics.CheckSphere(groundCheck.position, 0.2f, groundLayer);
     }
 
     private void ToggleCursor()
