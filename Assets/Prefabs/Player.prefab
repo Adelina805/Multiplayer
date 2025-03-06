@@ -278,11 +278,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 3
-  mouseSensitivity: 500
+  jumpForce: 2.5
+  mouseSensitivity: 300
   inputNameHorizontal: Horizontal
   inputNameVertical: Vertical
-  color: {r: 0.08940014, g: 0.29957336, b: 0.46226418, a: 1}
+  color: {r: 0.080010675, g: 0.34063628, b: 0.5471698, a: 1}
   camera: {fileID: 1043100413201597162}
   cameraHolder: {fileID: 2265830528367767855}
   groundCheck: {fileID: 6792944216971929831}
