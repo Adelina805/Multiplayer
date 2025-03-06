@@ -77,7 +77,7 @@ public class Player : NetworkBehaviour
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Reset vertical velocity
             rb.AddForce(Vector3.up * jumpForce / Time.fixedDeltaTime, ForceMode.Impulse);
         }
-        
+
         if (!IsGrounded()) 
         {
             Debug.Log("is not on da ground");
@@ -128,6 +128,30 @@ public class Player : NetworkBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+    }
+
+    // NEW: Request ownership of cheese when colliding with it**
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!IsOwner) return;
+
+        if (collision.gameObject.CompareTag("Cheese"))
+        {
+            NetworkObject cheeseObject = collision.gameObject.GetComponent<NetworkObject>();
+            if (cheeseObject != null && cheeseObject.IsOwnedByServer)
+            {
+                RequestCheeseOwnershipServerRpc(cheeseObject);
+            }
+        }
+    }
+
+    [ServerRpc]
+    private void RequestCheeseOwnershipServerRpc(NetworkObjectReference cheeseReference, ServerRpcParams rpcParams = default)
+    {
+        if (cheeseReference.TryGet(out NetworkObject cheeseObject))
+        {
+            cheeseObject.ChangeOwnership(rpcParams.Receive.SenderClientId);
         }
     }
 }
