@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using Cinemachine;
+using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 
 public class Player : NetworkBehaviour
 {

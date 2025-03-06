@@ -1,9 +1,10 @@
 using Unity.Netcode;
+using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 using Unity.Netcode.Components;
 using UnityEngine;
 
 [RequireComponent(typeof(NetworkObject))]
-//[RequireComponent(typeof(ClientNetworkTransform))]
+[RequireComponent(typeof(ClientNetworkTransform))]
 public class Cheese : NetworkBehaviour
 {
     private Rigidbody rb;

@@ -97,10 +97,13 @@ PrefabInstance:
       addedObject: {fileID: 3258329022348269285}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 38b7765311b3a413f82eaf71354e0739, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8575867514371874232}
+      addedObject: {fileID: 3443797279505909344}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 38b7765311b3a413f82eaf71354e0739, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2034316362224879512}
+      addedObject: {fileID: -3689858011203861763}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 38b7765311b3a413f82eaf71354e0739, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7713722624714611058}
   m_SourcePrefab: {fileID: 100100000, guid: 38b7765311b3a413f82eaf71354e0739, type: 3}
 --- !u!1 &5322261761478285520 stripped
 GameObject:
@@ -174,8 +177,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.019344568, y: 0.011141629, z: 0.017610297}
-  m_Center: {x: 0.00014330247, y: 0.00012011478, z: -0.0013720284}
+  m_Size: {x: 0.019344568, y: 0.008723624, z: 0.017610297}
+  m_Center: {x: 0.00014330247, y: -0.000032050906, z: -0.0013720284}
 --- !u!65 &964186576589489975
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -195,8 +198,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.03135787, y: 0.0027414684, z: 0.020177174}
-  m_Center: {x: -0.0058633443, y: 0.000078482924, z: -0.00008858939}
+  m_Size: {x: 0.03135787, y: 0.001078784, z: 0.020177174}
+  m_Center: {x: -0.0058633443, y: 0.000031983047, z: -0.00008858939}
 --- !u!114 &3258329022348269285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,7 +221,7 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &8575867514371874232
+--- !u!114 &3443797279505909344
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -249,7 +252,7 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &2034316362224879512
+--- !u!114 &-3689858011203861763
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -259,5 +262,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6c0be61502bb534f922ebb746851216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7713722624714611058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5322261761478285520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf6962758e014abb8462b10f4feec21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
