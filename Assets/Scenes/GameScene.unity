@@ -418,7 +418,7 @@ GameObject:
   m_Component:
   - component: {fileID: 972420080}
   - component: {fileID: 972420078}
-  - component: {fileID: 972420079}
+  - component: {fileID: 972420081}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -447,35 +447,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &972420079
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 972420077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34077dd17884844e7b70ca40d9455391, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <IsLocalPlayer>k__BackingField: 0
-  <IsOwner>k__BackingField: 0
-  <IsServer>k__BackingField: 0
-  <ServerIsHost>k__BackingField: 0
-  <IsClient>k__BackingField: 0
-  <IsHost>k__BackingField: 0
-  <IsOwnedByServer>k__BackingField: 0
-  <IsSpawned>k__BackingField: 0
-  m_NetworkObject: {fileID: 0}
-  <NetworkObjectId>k__BackingField: 0
-  <NetworkBehaviourId>k__BackingField: 0
-  NetworkBehaviourIdCache: 0
-  <OwnerClientId>k__BackingField: 0
-  m_VarInit: 0
-  <m_TargetIdBeingSynchronized>k__BackingField: 0
-  catPrefab: {fileID: 5140838036471501270, guid: da555ee9f405646009f788245dde3299, type: 3}
-  mousePrefab: {fileID: 2358571004117957135, guid: 1ffba6973d0d743b1a19d254ad5a4121, type: 3}
 --- !u!4 &972420080
 Transform:
   m_ObjectHideFlags: 0
@@ -491,6 +462,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &972420081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 972420077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde8ec1a136dc4e7b9e60bcbd8c9671e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catPrefab: {fileID: 5140838036471501270, guid: da555ee9f405646009f788245dde3299, type: 3}
+  mousePrefab: {fileID: 2358571004117957135, guid: 1ffba6973d0d743b1a19d254ad5a4121, type: 3}
 --- !u!1 &1130628140
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +847,6 @@ MonoBehaviour:
     PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
-      - {fileID: 11400000, guid: 96ed9a0adb0e04d93ab15ca436b0efc8, type: 2}
       - {fileID: 11400000, guid: 96ed9a0adb0e04d93ab15ca436b0efc8, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
