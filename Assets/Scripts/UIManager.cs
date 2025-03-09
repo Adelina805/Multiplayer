@@ -1,63 +1,49 @@
-using DilmerGames.Core.Singletons;
-using TMPro;
-using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Unity.Netcode;
 using UnityEngine.UI;
 
-public class UIManager : Singleton<UIManager>
+public class UIManager : MonoBehaviour
 {
-    [SerializeField]
-    private Button startServerButton;
-
-    [SerializeField]
-    private Button startHostButton;
-
-    [SerializeField]
-    private Button startClientButton;
-
-    [SerializeField]
-    private TextMeshProUGUI playersInGameText;
-
-    private bool hasServerStarted;
-
-    private void Awake()
-    {
-        Cursor.visible = true;
-    }
-
-    void Update()
-    {
-        playersInGameText.text = $"Players in game: {PlayersManager.Instance.PlayersInGame}";
-    }
+    [SerializeField] private Button startServerButton;
+    [SerializeField] private Button startHostButton;
+    [SerializeField] private Button startClientButton;
 
     void Start()
     {
-        // START SERVER
-        startServerButton.onClick.AddListener(() =>
-        {
-            if (NetworkManager.Singleton.StartServer())
-                Logger.Instance.LogInfo("Server started...");
-            else
-                Logger.Instance.LogInfo("Unable to start server...");
-        });
+        startServerButton.onClick.AddListener(() => LoadGameSceneAndStart("server"));
+        startHostButton.onClick.AddListener(() => LoadGameSceneAndStart("host"));
+        startClientButton.onClick.AddListener(() => LoadGameSceneAndStart("client"));
+    }
 
-        // START HOST
-        startHostButton.onClick.AddListener(() =>
+    private void LoadGameSceneAndStart(string mode)
+    {
+        Debug.Log($"Loading GameScene and starting {mode}...");
+        
+        // Load the scene asynchronously and wait for completion
+        SceneManager.LoadSceneAsync("GameScene").completed += (operation) =>
         {
+            Debug.Log("GameScene Loaded. Now starting network...");
+            
+            if (NetworkManager.Singleton == null)
+            {
+                Debug.LogError("NetworkManager is missing in GameScene!");
+                return;
+            }
 
-            if (NetworkManager.Singleton.StartHost())
-                Logger.Instance.LogInfo("Host started...");
-            else
-                Logger.Instance.LogInfo("Unable to start host...");
-        });
-
-        // START CLIENT
-        startClientButton.onClick.AddListener(() =>
-        {
-            if (NetworkManager.Singleton.StartClient())
-                Logger.Instance.LogInfo("Client started...");
-            else
-                Logger.Instance.LogInfo("Unable to start client...");
-        });
+            // Start networking AFTER the scene is fully loaded
+            switch (mode)
+            {
+                case "server":
+                    NetworkManager.Singleton.StartServer();
+                    break;
+                case "host":
+                    NetworkManager.Singleton.StartHost();
+                    break;
+                case "client":
+                    NetworkManager.Singleton.StartClient();
+                    break;
+            }
+        };
     }
 }
