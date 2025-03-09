@@ -282,7 +282,7 @@ MonoBehaviour:
   mouseSensitivity: 300
   inputNameHorizontal: Horizontal
   inputNameVertical: Vertical
-  color: {r: 0.080010675, g: 0.34063628, b: 0.5471698, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
   camera: {fileID: 1043100413201597162}
   cameraHolder: {fileID: 2265830528367767855}
   groundCheck: {fileID: 6792944216971929831}
