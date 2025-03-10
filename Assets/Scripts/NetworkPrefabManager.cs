@@ -26,7 +26,13 @@ public class NetworkPrefabManager : NetworkBehaviour
     {
         if (IsServer)
         {
+            // When the server spawns, it spawns players for all connected clients
             SpawnPlayer();
+        }
+        else
+        {
+            // For the client, trigger the spawn player request
+            RequestSpawnPlayerServerRpc();
         }
     }
 
@@ -35,9 +41,14 @@ public class NetworkPrefabManager : NetworkBehaviour
         if (IsServer)
         {
             Debug.Log("Spawning player on the server...");
+
+            // Get the player prefab to spawn based on role selection
+            string selectedRole = PlayerRoleManager.SelectedRole;
+            GameObject prefabToSpawn = (selectedRole == "Cat") ? catPrefab : mousePrefab;
+
+            // Spawn player for each connected client
             foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
             {
-                GameObject prefabToSpawn = (PlayerRoleManager.SelectedRole == "Cat") ? catPrefab : mousePrefab;
                 GameObject newPlayer = Instantiate(prefabToSpawn, GetSpawnPosition(), Quaternion.identity);
                 newPlayer.GetComponent<NetworkObject>().SpawnAsPlayerObject(client.ClientId);
             }
@@ -52,6 +63,14 @@ public class NetworkPrefabManager : NetworkBehaviour
     {
         // Random spawn position for each player
         return new Vector3(Random.Range(-5, 5), 1, Random.Range(-5, 5));
+    }
+
+    // ServerRpc to request the server to spawn the player for the client
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestSpawnPlayerServerRpc(ServerRpcParams rpcParams = default)
+    {
+        // The server will spawn the player when the client requests it
+        SpawnPlayer();
     }
 
     private void OnDestroy()
