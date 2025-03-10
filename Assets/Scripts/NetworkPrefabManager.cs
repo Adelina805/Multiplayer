@@ -6,6 +6,25 @@ public class NetworkPrefabManager : NetworkBehaviour
     [SerializeField] private GameObject catPrefab;
     [SerializeField] private GameObject mousePrefab;
 
+    private void OnEnable()
+    {
+        RoleSelectionUI.OnRoleSelected += HandleRoleSelected;
+    }
+
+    private void OnDisable()
+    {
+        RoleSelectionUI.OnRoleSelected -= HandleRoleSelected;
+    }
+
+    private void HandleRoleSelected(string selectedRole)
+    {
+        if (NetworkManager.Singleton.IsClient)
+        {
+            // Request the server to spawn the player with the selected role
+            RequestSpawnPlayerServerRpc(selectedRole);
+        }
+    }
+
     private void Start()
     {
         // Ensure the prefab manager handles player connection approval
@@ -24,26 +43,27 @@ public class NetworkPrefabManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        string selectedRole = PlayerRoleManager.SelectedRole; // Get the selected role
+
         if (IsServer)
         {
             // When the server spawns, it spawns players for all connected clients
-            SpawnPlayer();
+            SpawnPlayer(selectedRole);
         }
         else
         {
-            // For the client, trigger the spawn player request
-            RequestSpawnPlayerServerRpc();
+            // For the client, trigger the spawn player request and pass the selected role
+            RequestSpawnPlayerServerRpc(selectedRole);
         }
     }
 
-    private void SpawnPlayer()
+    private void SpawnPlayer(string selectedRole)
     {
         if (IsServer)
         {
             Debug.Log("Spawning player on the server...");
 
             // Get the player prefab to spawn based on role selection
-            string selectedRole = PlayerRoleManager.SelectedRole;
             GameObject prefabToSpawn = (selectedRole == "Cat") ? catPrefab : mousePrefab;
 
             // Spawn player for each connected client
@@ -67,10 +87,10 @@ public class NetworkPrefabManager : NetworkBehaviour
 
     // ServerRpc to request the server to spawn the player for the client
     [ServerRpc(RequireOwnership = false)]
-    private void RequestSpawnPlayerServerRpc(ServerRpcParams rpcParams = default)
+    private void RequestSpawnPlayerServerRpc(string selectedRole, ServerRpcParams rpcParams = default)
     {
-        // The server will spawn the player when the client requests it
-        SpawnPlayer();
+        // The server will spawn the player with the correct prefab based on the selected role
+        SpawnPlayer(selectedRole);
     }
 
     private void OnDestroy()
