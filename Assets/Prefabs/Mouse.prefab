@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 58774538727148878}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000005713105}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0000019043683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 7203811136513215245}
   m_Layer: 0
   m_Name: Mouse
-  m_TagString: Player
+  m_TagString: Mouse
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,7 +159,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115377422437300561}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 84.6846, y: 0, z: -207.6344}
   m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 0
@@ -250,8 +250,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3680705617
-  InScenePlacedSourceGlobalObjectIdHash: 3506732623
+  GlobalObjectIdHash: 2657168307
+  InScenePlacedSourceGlobalObjectIdHash: 3735561208
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -398,7 +398,7 @@ Transform:
   m_GameObject: {fileID: 3586398831931920414}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.000005713105}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0000019043683}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

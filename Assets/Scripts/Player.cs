@@ -4,6 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using Cinemachine;
 using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
+using System;
 
 public class Player : NetworkBehaviour
 {
@@ -132,17 +133,45 @@ public class Player : NetworkBehaviour
         }
     }
 
-    // NEW: Request ownership of cheese when colliding with it**
+    // // NEW: Request ownership of cheese when colliding with it**
+    // private void OnCollisionEnter(Collision collision)
+    // {
+    //     if (!IsOwner) return;
+
+    //     if (collision.gameObject.CompareTag("Cheese"))
+    //     {
+    //         NetworkObject cheeseObject = collision.gameObject.GetComponent<NetworkObject>();
+    //         if (cheeseObject != null && cheeseObject.IsOwnedByServer)
+    //         {
+    //             RequestCheeseOwnershipServerRpc(cheeseObject);
+    //         }
+    //     }
+    // }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!IsOwner) return;
 
         if (collision.gameObject.CompareTag("Cheese"))
         {
-            NetworkObject cheeseObject = collision.gameObject.GetComponent<NetworkObject>();
-            if (cheeseObject != null && cheeseObject.IsOwnedByServer)
+            NetworkObject cheeseNetworkObject = collision.gameObject.GetComponent<NetworkObject>();
+
+            if (cheeseNetworkObject != null && cheeseNetworkObject.IsSpawned)
             {
-                RequestCheeseOwnershipServerRpc(cheeseObject);
+                // Only proceed if the object is spawned
+                try
+                {
+                    NetworkObjectReference cheeseReference = cheeseNetworkObject;
+                    // Further processing with cheeseReference
+                }
+                catch (ArgumentException ex)
+                {
+                    Debug.LogError($"Error creating NetworkObjectReference for {cheeseNetworkObject.name}: {ex.Message}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Cheese object is either not found or not spawned.");
             }
         }
     }

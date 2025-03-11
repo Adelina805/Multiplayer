@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cheese
+  - Cat
+  - Mouse
   layers:
   - Default
   - TransparentFX
