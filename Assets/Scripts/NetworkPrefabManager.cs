@@ -59,6 +59,7 @@ public class NetworkPrefabManager : NetworkBehaviour
             Debug.Log($"Saving position before despawning for Client {clientId}");
             lastPosition = client.PlayerObject.transform.position;
             lastRotation = client.PlayerObject.transform.rotation;
+            Debug.Log($"Saved position: {lastPosition}, Saved rotation: {lastRotation}");
             client.PlayerObject.Despawn();
             Destroy(client.PlayerObject.gameObject);
         }
@@ -69,7 +70,7 @@ public class NetworkPrefabManager : NetworkBehaviour
     private void SpawnCorrectPrefab(ulong clientId, string selectedRole, Vector3 spawnPosition, Quaternion spawnRotation)
     {
         GameObject prefabToSpawn = (selectedRole == "Cat") ? catPrefab : mousePrefab;
-        Debug.Log($"Spawning {selectedRole} prefab for Client {clientId}");
+        Debug.Log($"Spawning {selectedRole} prefab for Client {clientId} at position {spawnPosition} and rotation {spawnRotation}");
 
         GameObject newPlayer = Instantiate(prefabToSpawn, spawnPosition, spawnRotation);
         NetworkObject networkObject = newPlayer.GetComponent<NetworkObject>();
@@ -85,6 +86,7 @@ public class NetworkPrefabManager : NetworkBehaviour
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
+            Debug.Log("Rigidbody velocities reset.");
         }
 
         networkObject.SpawnAsPlayerObject(clientId);
@@ -92,6 +94,10 @@ public class NetworkPrefabManager : NetworkBehaviour
 
         // Update client's player object reference
         UpdateClientPlayerObjectServerRpc(clientId, new NetworkObjectReference(networkObject));
+
+        // Additional logging to ensure correct positioning
+        Debug.Log($"New player object position after spawn: {newPlayer.transform.position}");
+        Debug.Log($"New player object rotation after spawn: {newPlayer.transform.rotation}");
     }
 
     [ServerRpc(RequireOwnership = false)]
