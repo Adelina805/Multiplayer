@@ -26,22 +26,8 @@ public class NetworkPrefabManager : NetworkBehaviour
         if (IsClient)
         {
             Debug.Log("Client spawned.");
-            // if (IsOwner)
-            // {
-            //     Debug.Log("Client is owner.");
-            //     if (NetworkManager.Singleton.LocalClient.PlayerObject == null)
-            //     {
-            //         Debug.LogError("PlayerObject is null before role update request!");
-            //         return;
-            //     }
-
-                Debug.Log($"Client {NetworkManager.Singleton.LocalClientId} requesting role update: {PlayerRoleManager.SelectedRole}");
-                StartCoroutine(DelayedRoleSwap(NetworkManager.Singleton.LocalClientId, PlayerRoleManager.SelectedRole));
-            // }
-            // else
-            // {
-            //     Debug.Log("Client is not owner.");
-            // }
+            Debug.Log($"Client {NetworkManager.Singleton.LocalClientId} requesting role update: {PlayerRoleManager.SelectedRole}");
+            StartCoroutine(DelayedRoleSwap(NetworkManager.Singleton.LocalClientId, PlayerRoleManager.SelectedRole));
         }
     }
 
@@ -118,7 +104,7 @@ public class NetworkPrefabManager : NetworkBehaviour
 
     private Vector3 GetSpawnPosition()
     {
-        return new Vector3(Random.Range(-5, 5), 1, Random.Range(-5, 5));
+        return new Vector3(Random.Range(-1, 1), 1, Random.Range(-1, 1));
     }
 
     private void OnDestroy()
