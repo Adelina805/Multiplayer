@@ -51,22 +51,27 @@ public class NetworkPrefabManager : NetworkBehaviour
         }
 
         var client = NetworkManager.Singleton.ConnectedClients[clientId];
+        Vector3 lastPosition = Vector3.zero;
+        Quaternion lastRotation = Quaternion.identity;
+
         if (client.PlayerObject != null)
         {
-            Debug.Log($"Despawning default player object for Client {clientId}");
+            Debug.Log($"Saving position before despawning for Client {clientId}");
+            lastPosition = client.PlayerObject.transform.position;
+            lastRotation = client.PlayerObject.transform.rotation;
             client.PlayerObject.Despawn();
             Destroy(client.PlayerObject.gameObject);
         }
 
-        SpawnCorrectPrefab(clientId, selectedRole);
+        SpawnCorrectPrefab(clientId, selectedRole, lastPosition, lastRotation);
     }
 
-    private void SpawnCorrectPrefab(ulong clientId, string selectedRole)
+    private void SpawnCorrectPrefab(ulong clientId, string selectedRole, Vector3 spawnPosition, Quaternion spawnRotation)
     {
         GameObject prefabToSpawn = (selectedRole == "Cat") ? catPrefab : mousePrefab;
         Debug.Log($"Spawning {selectedRole} prefab for Client {clientId}");
 
-        GameObject newPlayer = Instantiate(prefabToSpawn, GetSpawnPosition(), Quaternion.identity);
+        GameObject newPlayer = Instantiate(prefabToSpawn, spawnPosition, spawnRotation);
         NetworkObject networkObject = newPlayer.GetComponent<NetworkObject>();
 
         if (networkObject == null)
@@ -74,6 +79,12 @@ public class NetworkPrefabManager : NetworkBehaviour
             Debug.LogError("Spawned prefab is missing a NetworkObject component!");
             Destroy(newPlayer);
             return;
+        }
+
+        if (newPlayer.TryGetComponent<Rigidbody>(out Rigidbody rb))
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
 
         networkObject.SpawnAsPlayerObject(clientId);
@@ -100,11 +111,6 @@ public class NetworkPrefabManager : NetworkBehaviour
         {
             Debug.LogError($"Failed to get NetworkObject for Client {clientId}");
         }
-    }
-
-    private Vector3 GetSpawnPosition()
-    {
-        return new Vector3(Random.Range(-1, 1), 1, Random.Range(-1, 1));
     }
 
     private void OnDestroy()
