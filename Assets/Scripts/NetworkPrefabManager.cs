@@ -33,7 +33,7 @@ public class NetworkPrefabManager : NetworkBehaviour
 
     private IEnumerator DelayedRoleSwap(ulong clientId, string selectedRole)
     {
-        yield return new WaitForSeconds(1.0f); // Increased delay to ensure proper initialization
+        yield return new WaitForSeconds(0.2f);
         Debug.Log($"Client {clientId} sending role update request for: {selectedRole}");
         RequestRoleUpdateServerRpc(selectedRole);
     }
