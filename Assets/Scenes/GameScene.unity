@@ -1028,8 +1028,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cheesePrefab: {fileID: 5322261761478285520, guid: 8e37ce6b53da749618a09f7835d5fe73, type: 3}
-  cheeseCount: 20
-  spawnArea: {x: 20, y: 1, z: 20}
+  cheeseCount: 30
+  spawnArea: {x: 100, y: 1, z: 100}
 --- !u!4 &834210426
 Transform:
   m_ObjectHideFlags: 0
@@ -1765,7 +1765,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 60, y: -20}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1901413600
 MonoBehaviour:
