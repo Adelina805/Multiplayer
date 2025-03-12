@@ -133,21 +133,6 @@ public class Player : NetworkBehaviour
         }
     }
 
-    // // NEW: Request ownership of cheese when colliding with it**
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     if (!IsOwner) return;
-
-    //     if (collision.gameObject.CompareTag("Cheese"))
-    //     {
-    //         NetworkObject cheeseObject = collision.gameObject.GetComponent<NetworkObject>();
-    //         if (cheeseObject != null && cheeseObject.IsOwnedByServer)
-    //         {
-    //             RequestCheeseOwnershipServerRpc(cheeseObject);
-    //         }
-    //     }
-    // }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (!IsOwner) return;
@@ -158,6 +143,9 @@ public class Player : NetworkBehaviour
 
             if (cheeseNetworkObject != null && cheeseNetworkObject.IsSpawned)
             {
+                // allows client to interact and move cheese
+                RequestCheeseOwnershipServerRpc(cheeseNetworkObject);
+
                 // Only proceed if the object is spawned
                 try
                 {
