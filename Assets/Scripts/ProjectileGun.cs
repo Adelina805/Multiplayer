@@ -1,16 +1,11 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.Events;
 
-/// Thanks for downloading my projectile gun script! :D
-/// Feel free to use it in any project you like!
-/// 
-/// The code is fully commented but if you still have any questions
-/// don't hesitate to write a yt comment
-/// or use the #coding-problems channel of my discord server
-/// 
-/// Dave
 public class ProjectileGun : MonoBehaviour
 {
+    public UnityEvent OnGunShoot;
+
     //bullet 
     public GameObject bullet;
 
@@ -81,6 +76,10 @@ public class ProjectileGun : MonoBehaviour
     private void Shoot()
     {
         readyToShoot = false;
+
+        // detects damage
+        Debug.Log("pew");
+        OnGunShoot?.Invoke();
 
         //Find the exact hit position using a raycast
         Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
