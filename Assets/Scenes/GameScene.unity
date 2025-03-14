@@ -2599,7 +2599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed87430c492764f75afb14f09ff0d42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  catPrefab: {fileID: 2556347668471249559, guid: add5c27049ba641bbb9b38babb15740a, type: 3}
+  catPrefab: {fileID: 370267294254599304, guid: 7b56df804df0f4b859b606142f148902, type: 3}
   mousePrefab: {fileID: 115377422437300561, guid: dfc325f9bc2e343cf91da62b97b5e056, type: 3}
 --- !u!4 &2054290304
 Transform:
