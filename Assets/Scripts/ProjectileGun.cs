@@ -30,6 +30,14 @@ public class ProjectileGun : MonoBehaviour
     public Camera fpsCam;
     public Transform attackPoint;
 
+    private Transform PlayerCam;
+    [SerializeField] private Transform cameraHolder;
+
+    private void Start()
+    {
+        PlayerCam = cameraHolder.transform;
+    }
+
     //Graphics
     public GameObject muzzleFlash;
     public TextMeshProUGUI ammunitionDisplay;
@@ -82,7 +90,8 @@ public class ProjectileGun : MonoBehaviour
         OnGunShoot?.Invoke();
 
         //Find the exact hit position using a raycast
-        Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
+        Ray ray = new Ray(PlayerCam.position, PlayerCam.forward);
+        //Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
         RaycastHit hit;
 
         //check if ray hits something

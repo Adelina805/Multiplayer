@@ -979,7 +979,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   bullet: {fileID: 1231614812322653505, guid: 7050c910fa7f7934cbf7a468d6f75217, type: 3}
-  shootForce: 300
+  shootForce: 200
   upwardForce: 0
   timeBetweenShooting: 0.1
   spread: 0.1
@@ -992,6 +992,7 @@ MonoBehaviour:
   recoilForce: 25
   fpsCam: {fileID: 2307033721179350989}
   attackPoint: {fileID: 1153477754060641206}
+  cameraHolder: {fileID: 1153477754060641206}
   muzzleFlash: {fileID: 1000010254994808, guid: 9defeac88977c0d448aa4541073ee9e4, type: 3}
   ammunitionDisplay: {fileID: 9174000587559967108}
   allowInvoke: 1
