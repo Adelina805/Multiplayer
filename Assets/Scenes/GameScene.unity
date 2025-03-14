@@ -552,6 +552,7 @@ MonoBehaviour:
   mouseScoreText: {fileID: 1469654221}
   winPanel: {fileID: 231739610}
   winnerText: {fileID: 1789799247}
+  playAgainButton: {fileID: 30096459}
 --- !u!1 &679380883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1189,7 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cheesePrefab: {fileID: 5322261761478285520, guid: 8e37ce6b53da749618a09f7835d5fe73, type: 3}
   cheeseCount: 20
-  spawnArea: {x: 40, y: 1, z: 40}
+  spawnArea: {x: 10, y: 1, z: 10}
 --- !u!4 &834210426
 Transform:
   m_ObjectHideFlags: 0
@@ -1737,8 +1738,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2420,8 +2421,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using Unity.Netcode;
 using TMPro;
 
@@ -12,9 +13,17 @@ public class PointUIManager : NetworkBehaviour
     [SerializeField] private GameObject winPanel;
     [SerializeField] private TextMeshProUGUI winnerText;
 
+    [SerializeField] private Button playAgainButton;
+
     // We'll track cat and mouse scores on the server
     private int catScore;
     private int mouseScore;
+
+    public void Start() 
+    {
+        // Play again button
+        playAgainButton.onClick.AddListener(() => OnPlayAgainButtonClicked());
+    }
 
     // Called by the server (or via server) to update all clients' UI
     [ClientRpc]
@@ -70,7 +79,7 @@ public class PointUIManager : NetworkBehaviour
     private void RequestRestartServerRpc()
     {
         Debug.Log("Server received Play Again request");
-        
+
         // Reset both scores to 0 on the server
         catScore = 0;
         mouseScore = 0;
