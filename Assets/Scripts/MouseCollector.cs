@@ -17,16 +17,16 @@ public class MouseCollector : NetworkBehaviour
         {
             if (IsOwner) 
             {
-                // Notify all clients when the score changes
-                uiManager.UpdateScoreClientRpc(newValue);
+                // Pass two arguments: cat=0, mouse=newValue
+                uiManager.UpdateScoreClientRpc(0, newValue);
             }
         };
 
-        // Update UI only for the owner of the object
+        // On start, if we're the owner, update UI for our current score
         if (IsOwner)
         {
-            // Directly update the UI for the owner
-            uiManager.UpdateScoreClientRpc(score.Value);
+            // Again, cat=0, mouse=score.Value
+            uiManager.UpdateScoreClientRpc(0, score.Value);
         }
     }
 
@@ -65,7 +65,7 @@ public class MouseCollector : NetworkBehaviour
         {
             if (cheeseNetworkObject != null && cheeseNetworkObject.IsSpawned)
             {
-                // Ensure the object is only despawned once and no other actions occur after despawning
+                // Ensure the object is only despawned once
                 cheeseNetworkObject.Despawn(true);
                 Debug.Log($"Cheese with ID {cheeseId} despawned.");
             }
@@ -82,37 +82,40 @@ public class MouseCollector : NetworkBehaviour
         // Increment score on the server
         score.Value++;
 
-        // Propagate the updated score to all clients
-        uiManager.UpdateScoreClientRpc(score.Value);
+        // Update all clients: cat=0, mouse=score.Value
+        uiManager.UpdateScoreClientRpc(0, score.Value);
     }
 }
-
-
 // using UnityEngine;
 // using Unity.Netcode;
 // using TMPro;
 
 // public class MouseCollector : NetworkBehaviour
 // {
-//     public TextMeshProUGUI scoreText; // Assign in Inspector
 //     private NetworkVariable<int> score = new NetworkVariable<int>(0);
+//     private PointUIManager uiManager; // Reference to the UI Manager
 
 //     private void Start()
 //     {
-//         // Update UI only for the owner of the object
-//         if (IsOwner)
-//         {
-//             UpdateScoreUI(score.Value);
-//         }
+//         // Find the UI Manager in the scene
+//         uiManager = FindObjectOfType<PointUIManager>();
 
 //         // Handle the change in score value (sync across clients)
 //         score.OnValueChanged += (oldValue, newValue) =>
 //         {
-//             if (IsOwner)
+//             if (IsOwner) 
 //             {
-//                 UpdateScoreUI(newValue);
+//                 // Notify all clients when the score changes
+//                 uiManager.UpdateScoreClientRpc(newValue);
 //             }
 //         };
+
+//         // Update UI only for the owner of the object
+//         if (IsOwner)
+//         {
+//             // Directly update the UI for the owner
+//             uiManager.UpdateScoreClientRpc(score.Value);
+//         }
 //     }
 
 //     private void OnTriggerEnter(Collider other)
@@ -164,16 +167,10 @@ public class MouseCollector : NetworkBehaviour
 //             Debug.LogWarning($"Cheese object with ID {cheeseId} not found in SpawnManager.");
 //         }
 
-//         // Update the score on the server, which syncs across clients
+//         // Increment score on the server
 //         score.Value++;
-//     }
 
-//     // Update the UI with the new score
-//     private void UpdateScoreUI(int newScore)
-//     {
-//         if (scoreText != null)
-//         {
-//             scoreText.text = "Score: " + newScore;
-//         }
+//         // Propagate the updated score to all clients
+//         uiManager.UpdateScoreClientRpc(score.Value);
 //     }
 // }
