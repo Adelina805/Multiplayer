@@ -41,21 +41,5 @@ public class CheeseSpawner : NetworkBehaviour
             }
         }
     }
-
-    // private void SpawnCheeseObjects()
-    // {
-    //     for (int i = 0; i < cheeseCount; i++)
-    //     {
-    //         Vector3 randomPosition = new Vector3(
-    //             Random.Range(-spawnArea.x, spawnArea.x),
-    //             spawnArea.y, // Keep cheese above ground
-    //             Random.Range(-spawnArea.z, spawnArea.z)
-    //         );
-
-    //         GameObject cheeseInstance = Instantiate(cheesePrefab, randomPosition, Quaternion.identity);
-    //         cheeseInstance.GetComponent<NetworkObject>().Spawn(); // Spawn on the network
-    //         Debug.Log($"Cheese spawned with ID: {cheeseInstance.GetComponent<NetworkObject>().NetworkObjectId}");
-    //     }
-    // }
 }
 
