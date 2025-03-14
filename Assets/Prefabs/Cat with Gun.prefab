@@ -1008,6 +1008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4808079556644d3a42697782abd061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 1
+  Damage: 4
   BulletRange: 500
   cameraHolder: {fileID: 1153477754060641206}
