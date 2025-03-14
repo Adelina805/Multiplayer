@@ -1,23 +1,3 @@
-// using UnityEngine;
-// using TMPro;
-// using Unity.Netcode;
-
-// public class PointUIManager : NetworkBehaviour
-// {
-//     [SerializeField]
-//     private TextMeshProUGUI mouseScore; // Assign in Inspector
-
-//     // ClientRpc to update the score UI on all clients
-//     [ClientRpc]
-//     public void UpdateScoreClientRpc(int newScore)
-//     {
-//         if (mouseScore != null)
-//         {
-//             mouseScore.text = "Mouse: " + newScore;
-//         }
-//     }
-// }
-
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
@@ -82,12 +62,15 @@ public class PointUIManager : NetworkBehaviour
     public void OnPlayAgainButtonClicked()
     {
         // Let the server handle the reset
+        Debug.Log("Play Again button clicked on client side");
         RequestRestartServerRpc();
     }
-
+    
     [ServerRpc(RequireOwnership = false)]
     private void RequestRestartServerRpc()
     {
+        Debug.Log("Server received Play Again request");
+        
         // Reset both scores to 0 on the server
         catScore = 0;
         mouseScore = 0;
