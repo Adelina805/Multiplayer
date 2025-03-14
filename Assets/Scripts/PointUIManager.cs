@@ -79,36 +79,25 @@ public class PointUIManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void RequestRestartServerRpc()
     {
-        // 1) Shut down the old Netcode session
-        NetworkManager.Singleton.Shutdown();  
+        // 1) Subscribe to OnLoadComplete so we know when all clients are done loading
+        NetworkManager.Singleton.SceneManager.OnLoadComplete += OnAllClientsLoaded;
 
-        // 2) Then do a normal scene load (not via NetworkManager.Singleton.SceneManager)
-        //    because we've just shut down Netcode synchronization
-        UnityEngine.SceneManagement.SceneManager.LoadScene("RoleSelection", LoadSceneMode.Single);
+        // 2) Use Netcode’s SceneManager to load "RoleSelection" for every connected client
+        NetworkManager.Singleton.SceneManager.LoadScene("RoleSelection", LoadSceneMode.Single);
     }
-        //NetworkManager.Singleton.SceneManager.LoadScene("RoleSelection", LoadSceneMode.Single);
 
-    // [ServerRpc(RequireOwnership = false)]
-    // private void RequestRestartServerRpc()
-    // {
-    //     Debug.Log("Server received Play Again request");
-
-    //     // Reset both scores to 0 on the server
-    //     catScore = 0;
-    //     mouseScore = 0;
-
-    //     // Update every client’s UI back to 0
-    //     UpdateScoreClientRpc(catScore, mouseScore);
-
-    //     // Hide the win panel on all clients
-    //     HideWinPanelClientRpc();
-    // }
-
-    [ClientRpc]
-    private void HideWinPanelClientRpc()
+    // This method is called once all clients finish loading the new scene
+    private void OnAllClientsLoaded(ulong clientId, string sceneName, LoadSceneMode loadSceneMode)
     {
-        if (winPanel != null)
-            winPanel.SetActive(false);
+        // Only act if it's the "RoleSelection" scene
+        if (sceneName == "RoleSelection")
+        {
+            // Unsubscribe so we only do this once
+            NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnAllClientsLoaded;
+
+            // 3) Shut down the Netcode session
+            NetworkManager.Singleton.Shutdown();
+        }
     }
 
     // Methods that other scripts can call to increment cat or mouse
