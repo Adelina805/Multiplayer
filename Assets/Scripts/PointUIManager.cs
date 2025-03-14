@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PointUIManager : NetworkBehaviour
 {
@@ -78,18 +79,30 @@ public class PointUIManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void RequestRestartServerRpc()
     {
-        Debug.Log("Server received Play Again request");
+        // 1) Shut down the old Netcode session
+        NetworkManager.Singleton.Shutdown();  
 
-        // Reset both scores to 0 on the server
-        catScore = 0;
-        mouseScore = 0;
-
-        // Update every client’s UI back to 0
-        UpdateScoreClientRpc(catScore, mouseScore);
-
-        // Hide the win panel on all clients
-        HideWinPanelClientRpc();
+        // 2) Then do a normal scene load (not via NetworkManager.Singleton.SceneManager)
+        //    because we've just shut down Netcode synchronization
+        UnityEngine.SceneManagement.SceneManager.LoadScene("RoleSelection", LoadSceneMode.Single);
     }
+        //NetworkManager.Singleton.SceneManager.LoadScene("RoleSelection", LoadSceneMode.Single);
+
+    // [ServerRpc(RequireOwnership = false)]
+    // private void RequestRestartServerRpc()
+    // {
+    //     Debug.Log("Server received Play Again request");
+
+    //     // Reset both scores to 0 on the server
+    //     catScore = 0;
+    //     mouseScore = 0;
+
+    //     // Update every client’s UI back to 0
+    //     UpdateScoreClientRpc(catScore, mouseScore);
+
+    //     // Hide the win panel on all clients
+    //     HideWinPanelClientRpc();
+    // }
 
     [ClientRpc]
     private void HideWinPanelClientRpc()
