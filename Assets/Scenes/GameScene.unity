@@ -371,7 +371,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &119771811
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -734,7 +733,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &459406684
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -967,7 +965,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &466363338
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1659,7 +1656,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &791912633
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1758,8 +1754,8 @@ GameObject:
   - component: {fileID: 792387021}
   - component: {fileID: 792387020}
   - component: {fileID: 792387019}
-  - component: {fileID: 792387018}
   - component: {fileID: 792387017}
+  - component: {fileID: 792387018}
   - component: {fileID: 792387016}
   - component: {fileID: 792387015}
   - component: {fileID: 792387014}
@@ -1874,7 +1870,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &792387019
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2784,7 +2779,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &1468870918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3163,7 +3157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &1634181461
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3284,7 +3277,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &1648955035
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3654,7 +3646,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &1735776861
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4340,7 +4331,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &1998463486
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4623,7 +4613,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &2085757896
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4838,7 +4827,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 512268951}
 --- !u!65 &2121702645
 BoxCollider:
   m_ObjectHideFlags: 0
