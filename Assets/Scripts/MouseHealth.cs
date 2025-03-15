@@ -29,6 +29,7 @@ public class MouseHealth : NetworkBehaviour
                     pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
                 }
 
+                Debug.Log($"Entity Destroyed: health is {health}");
                 Destroy(gameObject);
             }
         }
@@ -47,9 +48,18 @@ public class MouseHealth : NetworkBehaviour
         Health = StartingHealth;
     }
 
-    // Call this method to apply damage to the entity and update the score
+    // apply damage to the entity and update the score
     public void TakeDamage(float damage)
     {
+        Debug.Log("TakeDamage() called!");
+
+        // Grant the cat points equal to the damage taken
+        if (pointUIManager != null)
+        {
+            // Cast damage to int in case it's non-integer.
+            pointUIManager.AddCatScoreServerRpc((int)damage);
+        }
+
         Health -= damage;
     }
 }

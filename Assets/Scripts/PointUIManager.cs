@@ -30,6 +30,8 @@ public class PointUIManager : NetworkBehaviour
     [ClientRpc]
     public void UpdateScoreClientRpc(int newCatScore, int newMouseScore)
     {
+        Debug.Log($"ClientRpc: Updating score UI => Cat: {newCatScore}, Mouse: {newMouseScore}");
+
         // Store the updated scores locally on each client
         catScore = newCatScore;
         mouseScore = newMouseScore;
@@ -49,10 +51,12 @@ public class PointUIManager : NetworkBehaviour
         // Check for winner
         if (catScore >= 10)
         {
+            Debug.Log("Cat Wins !!");
             ShowWinPanelClientRpc("Cat");
         }
         else if (mouseScore >= 10)
         {
+            Debug.Log("Mouse Wins !!");
             ShowWinPanelClientRpc("Mouse");
         }
     }
@@ -79,10 +83,10 @@ public class PointUIManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void RequestRestartServerRpc()
     {
-        // 1) Subscribe to OnLoadComplete so we know when all clients are done loading
+        // Subscribe to OnLoadComplete so we know when all clients are done loading
         NetworkManager.Singleton.SceneManager.OnLoadComplete += OnAllClientsLoaded;
 
-        // 2) Use Netcode’s SceneManager to load "RoleSelection" for every connected client
+        // Use Netcode’s SceneManager to load "RoleSelection" for every connected client
         NetworkManager.Singleton.SceneManager.LoadScene("RoleSelection", LoadSceneMode.Single);
     }
 
@@ -95,7 +99,7 @@ public class PointUIManager : NetworkBehaviour
             // Unsubscribe so we only do this once
             NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnAllClientsLoaded;
 
-            // 3) Shut down the Netcode session
+            // Shut down the Netcode session
             NetworkManager.Singleton.Shutdown();
         }
     }
@@ -105,6 +109,7 @@ public class PointUIManager : NetworkBehaviour
     public void AddCatScoreServerRpc(int increment)
     {
         catScore += increment;
+        Debug.Log($"AddCatScoreServerRpc called: catScore is now {catScore}");
         UpdateScoreClientRpc(catScore, mouseScore);
     }
 
@@ -112,6 +117,7 @@ public class PointUIManager : NetworkBehaviour
     public void AddMouseScoreServerRpc(int increment)
     {
         mouseScore += increment;
+        Debug.Log($"AddMouseScoreServerRpc called: mouseScore is now {mouseScore}");
         UpdateScoreClientRpc(catScore, mouseScore);
     }
 

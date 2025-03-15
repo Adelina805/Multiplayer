@@ -22,9 +22,14 @@ public class GunDamage : MonoBehaviour
 
         if (Physics.Raycast(gunRay, out RaycastHit hitInfo, BulletRange))
         {
+            // if (hitInfo.collider.gameObject.TryGetComponent(out MouseHealth enemy))
+            // {
+            //     enemy.Health -= Damage;
+            // }
+
             if (hitInfo.collider.gameObject.TryGetComponent(out MouseHealth enemy))
             {
-                enemy.Health -= Damage;
+                enemy.TakeDamage(Damage);
             }
         }
         
