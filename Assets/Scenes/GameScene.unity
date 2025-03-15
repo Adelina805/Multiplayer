@@ -709,8 +709,8 @@ GameObject:
   - component: {fileID: 459406686}
   - component: {fileID: 459406685}
   - component: {fileID: 459406684}
-  - component: {fileID: 459406683}
   - component: {fileID: 459406688}
+  - component: {fileID: 459406683}
   - component: {fileID: 459406691}
   - component: {fileID: 459406690}
   - component: {fileID: 459406689}
@@ -4297,8 +4297,8 @@ GameObject:
   - component: {fileID: 1998463488}
   - component: {fileID: 1998463487}
   - component: {fileID: 1998463486}
-  - component: {fileID: 1998463485}
   - component: {fileID: 1998463484}
+  - component: {fileID: 1998463485}
   m_Layer: 0
   m_Name: Cube Print (3)
   m_TagString: Untagged
@@ -4458,7 +4458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catPrefab: {fileID: 370267294254599304, guid: 7b56df804df0f4b859b606142f148902, type: 3}
-  mousePrefab: {fileID: 2118906735704633744, guid: de7ada1e737cc4970a3bd5c0588c5f49, type: 3}
+  mousePrefab: {fileID: 5294402470195186096, guid: e822c5bc902c0427abea046379ebfb81, type: 3}
 --- !u!4 &2054290304
 Transform:
   m_ObjectHideFlags: 0

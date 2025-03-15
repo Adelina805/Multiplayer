@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Unity.Netcode;
+using TMPro;
 
-public class MouseHealth : MonoBehaviour
+public class MouseHealth : NetworkBehaviour
 {
     [SerializeField] private float StartingHealth;
     private float health;
@@ -43,13 +44,6 @@ public class MouseHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         Health -= damage;
-
-        // Update the score in PointUIManager when damage is taken
-        if (health > 0f && pointUIManager != null)
-        {
-            Debug.Log("Updating cat score from TakeDamage");
-            pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
-        }
     }
 }
 
