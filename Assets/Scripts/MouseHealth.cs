@@ -23,13 +23,13 @@ public class MouseHealth : MonoBehaviour
 
             if (health <= 0f)
             {
-                Destroy(gameObject);
-                
-                // Update the score in PointUIManager if the entity takes damage
+                // Update the score in PointUIManager if the entity dies
                 if (pointUIManager != null)
                 {
                     pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
                 }
+
+                Destroy(gameObject);
             }
         }
     }
@@ -44,13 +44,16 @@ public class MouseHealth : MonoBehaviour
     {
         Health -= damage;
 
-        // // Update the score in PointUIManager when damage is taken
-        // if (health > 0f && pointUIManager != null)
-        // {
-        //     pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
-        // }
+        // Update the score in PointUIManager when damage is taken
+        if (health > 0f && pointUIManager != null)
+        {
+            Debug.Log("Updating cat score from TakeDamage");
+            pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
+        }
     }
 }
+
+
 // using System.Collections;
 // using System.Collections.Generic;
 // using UnityEngine;
