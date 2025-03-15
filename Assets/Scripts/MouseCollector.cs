@@ -17,16 +17,18 @@ public class MouseCollector : NetworkBehaviour
         {
             if (IsOwner) 
             {
-                // Pass two arguments: cat=0, mouse=newValue
-                uiManager.UpdateScoreClientRpc(0, newValue);
+                // Get the current cat score from the UI manager
+                int currentCatScore = uiManager.GetCatScore();
+                uiManager.UpdateScoreClientRpc(currentCatScore, newValue);
             }
         };
 
         // On start, if we're the owner, update UI for our current score
         if (IsOwner)
         {
-            // Again, cat=0, mouse=score.Value
-            uiManager.UpdateScoreClientRpc(0, score.Value);
+            // Get the current cat score from the UI manager
+            int currentCatScore = uiManager.GetCatScore();
+            uiManager.UpdateScoreClientRpc(currentCatScore, score.Value);
         }
     }
 
@@ -82,7 +84,8 @@ public class MouseCollector : NetworkBehaviour
         // Increment score on the server
         score.Value++;
 
-        // Update all clients: cat=0, mouse=score.Value
-        uiManager.UpdateScoreClientRpc(0, score.Value);
+        // Get the current cat score from the UI manager
+        int currentCatScore = uiManager.GetCatScore();
+        uiManager.UpdateScoreClientRpc(currentCatScore, score.Value);
     }
 }

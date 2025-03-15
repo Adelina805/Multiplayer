@@ -114,4 +114,16 @@ public class PointUIManager : NetworkBehaviour
         mouseScore += increment;
         UpdateScoreClientRpc(catScore, mouseScore);
     }
+
+    // Gets current score for cat
+    public int GetCatScore()
+    {
+        return catScore;
+    }
+
+    // Gets current score for mouse
+    public int GetMouseScore()
+    {
+        return mouseScore;
+    }
 }
