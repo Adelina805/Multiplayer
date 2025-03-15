@@ -24,12 +24,11 @@ public class MouseHealth : MonoBehaviour
             if (health <= 0f)
             {
                 Destroy(gameObject);
-
-                // Update the score in PointUIManager if the entity dies
+                
+                // Update the score in PointUIManager if the entity takes damage
                 if (pointUIManager != null)
                 {
-                    // Assuming this is a "cat" entity. Change this logic based on your game's rules.
-                    pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 (or mouse depending on entity)
+                    pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
                 }
             }
         }
@@ -45,13 +44,11 @@ public class MouseHealth : MonoBehaviour
     {
         Health -= damage;
 
-        // If you need to update score based on which entity is taking damage, do it here
-        // For example, if the cat takes damage, update mouse's score.
-        if (pointUIManager != null)
-        {
-            // Assuming the entity is a cat or mouse, update accordingly
-            pointUIManager.AddMouseScoreServerRpc(1);  // Increase mouse's score by 1 (or adjust accordingly)
-        }
+        // // Update the score in PointUIManager when damage is taken
+        // if (health > 0f && pointUIManager != null)
+        // {
+        //     pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
+        // }
     }
 }
 // using System.Collections;
