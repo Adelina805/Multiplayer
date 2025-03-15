@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
+  pointUIManager: {fileID: 512268951}
 --- !u!65 &119771811
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -733,6 +734,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
+  pointUIManager: {fileID: 512268951}
 --- !u!65 &459406684
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2333,7 +2335,6 @@ GameObject:
   - component: {fileID: 1648955035}
   - component: {fileID: 1648955034}
   - component: {fileID: 1648955039}
-  - component: {fileID: 1648955040}
   m_Layer: 0
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -2354,6 +2355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
+  pointUIManager: {fileID: 512268951}
 --- !u!65 &1648955035
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2461,19 +2463,6 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
---- !u!114 &1648955040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1648955033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d6ec8595ab1d4814a361942d8d96db7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartingHealth: 10
 --- !u!1 &1735761922
 GameObject:
   m_ObjectHideFlags: 0
@@ -3183,7 +3172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   catPrefab: {fileID: 370267294254599304, guid: 7b56df804df0f4b859b606142f148902, type: 3}
-  mousePrefab: {fileID: 115377422437300561, guid: dfc325f9bc2e343cf91da62b97b5e056, type: 3}
+  mousePrefab: {fileID: 5434881810976430502, guid: dbf4f9d749f8340a2935cfbc5d6928ba, type: 3}
 --- !u!4 &2054290304
 Transform:
   m_ObjectHideFlags: 0
