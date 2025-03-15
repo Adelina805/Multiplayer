@@ -16,7 +16,8 @@ public class Entity : MonoBehaviour
         set
         {
             health = value;
-            Debug.Log(health);
+            //Debug.Log(health);
+            Debug.Log($"Entity health: {health}");
 
             if (health <= 0f)
             {
