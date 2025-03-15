@@ -1,8 +1,9 @@
 using UnityEngine;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine.Events;
 
-public class ProjectileGun : MonoBehaviour
+public class ProjectileGun : NetworkBehaviour
 {
     public UnityEvent OnGunShoot;
 
@@ -36,6 +37,12 @@ public class ProjectileGun : MonoBehaviour
     private void Start()
     {
         PlayerCam = cameraHolder.transform;
+
+        // If this gun is not owned by the local player, disable its ammo display UI
+        if (!IsOwner && ammunitionDisplay != null)
+        {
+            ammunitionDisplay.gameObject.SetActive(false);
+        }
     }
 
     //Graphics
@@ -54,12 +61,16 @@ public class ProjectileGun : MonoBehaviour
 
     private void Update()
     {
+        // Only run input logic if we're the local owner
+        if (!IsOwner) return;
+
         MyInput();
 
         //Set ammo display, if it exists :D
         if (ammunitionDisplay != null)
             ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
     }
+
     private void MyInput()
     {
         //Check if allowed to hold down button and take corresponding input
@@ -159,4 +170,5 @@ public class ProjectileGun : MonoBehaviour
         bulletsLeft = magazineSize;
         reloading = false;
     }
+
 }
