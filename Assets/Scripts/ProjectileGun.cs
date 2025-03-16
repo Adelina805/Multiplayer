@@ -129,11 +129,14 @@ public class ProjectileGun : NetworkBehaviour
         // Spawn bullet on the server
         SpawnBulletServerRpc(attackPoint.position, directionWithSpread.normalized);
 
-        // Spawn muzzle flash on the server
-        SpawnMuzzleFlashClientRpc(attackPoint.position);
-        
         bulletsLeft--;
         bulletsShot++;
+
+        // Use the gun’s transform rotation
+        Quaternion muzzleRotation = attackPoint.rotation;
+
+        // Spawn muzzle flash on the server
+        SpawnMuzzleFlashClientRpc(attackPoint.position, muzzleRotation);
 
         // Add recoil to local player's RigidBody (one time only)
         if (allowInvoke)
@@ -193,12 +196,13 @@ public class ProjectileGun : NetworkBehaviour
 
     // ServerRPC for muzzle flash 
     [ClientRpc]
-    private void SpawnMuzzleFlashClientRpc(Vector3 position)
+    private void SpawnMuzzleFlashClientRpc(Vector3 position, Quaternion rotation)
     {
         if (muzzleFlash != null)
         {
-            // Instantiate the muzzle flash prefab at the given position
-            Instantiate(muzzleFlash, position, Quaternion.identity);
+            // Instantiate the muzzle flash prefab with the given rotation
+            Instantiate(muzzleFlash, position, rotation);
         }
     }
+
 }
