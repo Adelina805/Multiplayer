@@ -21,7 +21,7 @@ public class ProjectileGun : NetworkBehaviour
     // References
     public Camera fpsCam;             // Or Cinemachine camera
     public Transform attackPoint;     // Where bullets spawn
-    [SerializeField] private Transform cameraHolder; // Possibly the parent of your camera
+    [SerializeField] private Transform cameraHolder; // parent of your camera
 
     // Graphics
     public GameObject muzzleFlash;

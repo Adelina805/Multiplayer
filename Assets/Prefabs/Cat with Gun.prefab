@@ -941,6 +941,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7481931594384971628}
   m_SourcePrefab: {fileID: 100100000, guid: 1f01a7aea7ce1e9419915423dfb24a86, type: 3}
+--- !u!4 &3278159878092836888 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7775000644320358397, guid: 1f01a7aea7ce1e9419915423dfb24a86, type: 3}
+  m_PrefabInstance: {fileID: 5086821199490367461}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6130789028688228569 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1408769947456130876, guid: 1f01a7aea7ce1e9419915423dfb24a86, type: 3}
@@ -979,7 +984,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   bulletPrefab: {fileID: 2756687917228305588, guid: 7050c910fa7f7934cbf7a468d6f75217, type: 3}
-  shootForce: 200
+  shootForce: 100
   upwardForce: 0
   timeBetweenShooting: 0.1
   spread: 0.1
@@ -989,9 +994,9 @@ MonoBehaviour:
   bulletsPerTap: 1
   allowButtonHold: 1
   fpsCam: {fileID: 2307033721179350989}
-  attackPoint: {fileID: 3948525215765061179}
+  attackPoint: {fileID: 3278159878092836888}
   cameraHolder: {fileID: 1153477754060641206}
-  muzzleFlash: {fileID: 1000010254994808, guid: 228c14e96913b48f598622e9c4ec79a8, type: 3}
+  muzzleFlash: {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}
   ammunitionDisplay: {fileID: 9174000587559967108}
   playerRb: {fileID: 8188576189991350744}
   recoilForce: 25
