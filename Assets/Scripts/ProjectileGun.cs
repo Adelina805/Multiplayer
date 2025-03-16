@@ -104,11 +104,7 @@ public class ProjectileGun : NetworkBehaviour
         OnGunShoot?.Invoke();
         Debug.Log("Pew!");
 
-        // ---------------------------------------------
-        // 1) Raycast from camera to find target point
-        // ---------------------------------------------
-        // Use PlayerCam if that is truly your viewpoint,
-        // or fpsCam.transform if using a direct reference to the real camera.
+        // Raycast from camera to find target point
         Ray ray = new Ray(PlayerCam.position, PlayerCam.forward);
         RaycastHit hit;
         Vector3 targetPoint;
@@ -122,32 +118,20 @@ public class ProjectileGun : NetworkBehaviour
             targetPoint = ray.GetPoint(100f);
         }
 
-        // ---------------------------------------------
-        // 2) Compute direction from attackPoint to targetPoint
-        // ---------------------------------------------
+        // Compute direction from attackPoint to targetPoint
         Vector3 directionWithoutSpread = targetPoint - attackPoint.position;
 
-        // ---------------------------------------------
-        // 3) Apply spread
-        // ---------------------------------------------
+        // Apply spread
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
         Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0f);
 
-        // ---------------------------------------------
-        // 4) Spawn bullet on the server
-        // ---------------------------------------------
-        // We pass in attackPoint.position as spawn position
-        // and directionWithSpread as forward direction
+        // Spawn bullet on the server
         SpawnBulletServerRpc(attackPoint.position, directionWithSpread.normalized);
 
-        // Instantiate muzzle flash locally if desired
-        if (muzzleFlash != null)
-        {
-            Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
-        }
-
-        // Subtract bullet and increment shot count
+        // Spawn muzzle flash on the server
+        SpawnMuzzleFlashClientRpc(attackPoint.position);
+        
         bulletsLeft--;
         bulletsShot++;
 
@@ -185,9 +169,7 @@ public class ProjectileGun : NetworkBehaviour
         reloading = false;
     }
 
-    // -----------------------------
     // ServerRPC for bullet spawn
-    // -----------------------------
     [ServerRpc]
     private void SpawnBulletServerRpc(Vector3 spawnPos, Vector3 bulletForward)
     {
@@ -200,14 +182,23 @@ public class ProjectileGun : NetworkBehaviour
         // Spawn across all clients
         bulletInstance.Spawn();
 
-        // If the bullet has a script that moves it (like physics),
-        // that script can be responsible for applying forces or movement.
-        // Or you could do it right here if you added a rigidbody to the bullet.
+        // apply forces to bullet 
         if (bulletInstance.TryGetComponent(out Rigidbody bulletRb))
         {
             // Server applies the force
             bulletRb.AddForce(bulletForward * shootForce, ForceMode.Impulse);
             bulletRb.AddForce(Vector3.up * upwardForce, ForceMode.Impulse);
+        }
+    }
+
+    // ServerRPC for muzzle flash 
+    [ClientRpc]
+    private void SpawnMuzzleFlashClientRpc(Vector3 position)
+    {
+        if (muzzleFlash != null)
+        {
+            // Instantiate the muzzle flash prefab at the given position
+            Instantiate(muzzleFlash, position, Quaternion.identity);
         }
     }
 }
