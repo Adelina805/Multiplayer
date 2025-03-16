@@ -21,6 +21,8 @@ public class ProjectileGun : NetworkBehaviour
     // References
     public Camera fpsCam;             // Or Cinemachine camera
     public Transform attackPoint;     // Where bullets spawn
+    public GameObject firstPersonGun; // The local-view gun mesh/model
+    public GameObject thirdPersonGun; // The third-person gun mesh/model (networked)
     [SerializeField] private Transform cameraHolder; // parent of your camera
 
     // Graphics
@@ -46,8 +48,22 @@ public class ProjectileGun : NetworkBehaviour
 
     private void Start()
     {
-        // Possibly override this if Cinemachine is controlling the camera
-        // but cameraHolder is the transform we rotate
+        // Decide which camera/gun to show: 
+        // The local/first-person camera + gun is only for the owner.
+        // The third-person gun is for everyone else.
+        if (!IsOwner)
+        {
+            // Disable local FPS camera & local gun
+            if (fpsCam) fpsCam.gameObject.SetActive(false);
+            if (firstPersonGun) firstPersonGun.SetActive(false);
+        }
+        else
+        {
+            // Disable the third-person gun for our local view (so we don't see it floating in front of us)
+            if (thirdPersonGun) thirdPersonGun.SetActive(false);
+        }
+
+        // If Cinemachine is not used, we track the cameraHolder for rotation
         PlayerCam = cameraHolder ? cameraHolder : fpsCam.transform;
 
         // Hide ammo display if we are not the owner
@@ -197,7 +213,7 @@ public class ProjectileGun : NetworkBehaviour
         }
     }
 
-    // ServerRPC for muzzle flash 
+    // ClientRPC for muzzle flash 
     [ClientRpc]
     private void SpawnMuzzleFlashClientRpc(Vector3 position, Quaternion rotation)
     {

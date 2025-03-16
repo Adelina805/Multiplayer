@@ -1137,11 +1137,13 @@ MonoBehaviour:
   allowButtonHold: 1
   fpsCam: {fileID: 2307033721179350989}
   attackPoint: {fileID: 3278159878092836888}
+  firstPersonGun: {fileID: 6800189761935026787}
+  thirdPersonGun: {fileID: 1908732886277168638}
   cameraHolder: {fileID: 1153477754060641206}
   muzzleFlash: {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}
   ammunitionDisplay: {fileID: 9174000587559967108}
   playerRb: {fileID: 8188576189991350744}
-  recoilForce: 25
+  recoilForce: 30
 --- !u!114 &7481931594384971628
 MonoBehaviour:
   m_ObjectHideFlags: 0
