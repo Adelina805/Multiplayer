@@ -62,6 +62,9 @@ public class ProjectileGun : NetworkBehaviour
         // Only handle input if we own this gun
         if (!IsOwner) return;
 
+        // Match the camera rotation
+        transform.rotation = PlayerCam.rotation;
+
         MyInput();
 
         // Update ammo display (local owner only)
