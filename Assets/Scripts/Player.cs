@@ -23,6 +23,10 @@ public class Player : NetworkBehaviour
     [SerializeField] private Transform groundCheck; // Empty object at player's feet
     [SerializeField] private LayerMask groundLayer; // Assign ground layer in Inspector
 
+    // --- Footsteps settings ---
+    [SerializeField] private float footstepInterval = 0.5f; // Seconds between footsteps
+    private float footstepTimer = 0f;
+
     private Rigidbody rb;
     private Renderer renderer;
 
@@ -103,6 +107,23 @@ public class Player : NetworkBehaviour
         {
             Debug.Log("is not on da ground");
             rb.AddForce(Vector3.down * 5f, ForceMode.Acceleration); // Faster fall
+        }
+
+        // Only play footsteps if the player is on the ground and moving
+        if (IsGrounded() && (Mathf.Abs(inputHorizontal) > 0.1f || Mathf.Abs(inputVertical) > 0.1f))
+        {
+            footstepTimer += Time.deltaTime;
+            if (footstepTimer >= footstepInterval)
+            {
+                // Play footsteps sound locally
+                NetworkAudioManager.Instance.PlaySoundLocal(AudioClipID.Footsteps);
+                footstepTimer = 0f;
+            }
+        }
+        else
+        {
+            // Reset the timer so footsteps play immediately when movement resumes
+            footstepTimer = footstepInterval;
         }
 
         // Mouse look

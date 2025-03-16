@@ -1491,7 +1491,7 @@ MonoBehaviour:
   sfxSource: {fileID: 1054561909}
   gunShootClip: {fileID: 8300000, guid: 736a6ee94d8a94aef925851d18125a0c, type: 3}
   gunReloadClip: {fileID: 8300000, guid: d85099fefd84d429788e09001413207b, type: 3}
-  footstepsClip: {fileID: 8300000, guid: 3519e1b49b777a34d8674238d3c71350, type: 3}
+  footstepsClip: {fileID: 8300000, guid: 258857b6c358d0644a339892e0212203, type: 3}
   jumpClip: {fileID: 8300000, guid: fb859d907317d2446a59ffdeb1807e15, type: 3}
   collectCheeseClip: {fileID: 8300000, guid: 68f790dbfa1f84670a70b81bd91a98e1, type: 3}
   takeDamageClip: {fileID: 8300000, guid: fb54d3718f2698f4a894c26225dc3e4f, type: 3}
