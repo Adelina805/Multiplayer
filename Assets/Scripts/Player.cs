@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using Cinemachine;
 using Unity.Multiplayer.Samples.Utilities.ClientAuthority;
 using System;
+using TMPro;
 
 public class Player : NetworkBehaviour
 {
+    // Reference to the PointUIManager to update the score
+    private PointUIManager pointUIManager;
+    private int catScore, mouseScore;
+
     [SerializeField] private float speed;
     [SerializeField] private float jumpForce; // Jump power
     [SerializeField] private float mouseSensitivity;
@@ -46,6 +49,14 @@ public class Player : NetworkBehaviour
 
         Application.targetFrameRate = 60; // Lock to 60 FPS
         Physics.gravity = new Vector3(0, -30f, 0); // Adjust for snappier jumps
+
+        // Find PointUIManager in the scene (this is done at runtime after the mouse is spawned)
+        pointUIManager = FindObjectOfType<PointUIManager>();
+
+        if (pointUIManager == null)
+        {
+            Debug.LogError("PointUIManager not found in the scene!");
+        }
     }
 
     public override void OnNetworkSpawn()
@@ -58,6 +69,13 @@ public class Player : NetworkBehaviour
         {
             camera.Priority = 0;
         }
+
+        // get scores
+        if (IsClient && !IsServer)
+        {
+            RequestScoreServerRpc();
+        }
+
     }
 
     private void Update()
@@ -164,6 +182,7 @@ public class Player : NetworkBehaviour
         }
     }
 
+    // allow client to interact with cheese
     [ServerRpc]
     private void RequestCheeseOwnershipServerRpc(NetworkObjectReference cheeseReference, ServerRpcParams rpcParams = default)
     {
@@ -171,5 +190,16 @@ public class Player : NetworkBehaviour
         {
             cheeseObject.ChangeOwnership(rpcParams.Receive.SenderClientId);
         }
+    }
+
+    // get current score on start
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestScoreServerRpc(ServerRpcParams serverRpcParams = default)
+    {
+        // Pull the up-to-date scores from PointUIManager:
+        int currentCatScore   = pointUIManager.GetCatScore();
+        int currentMouseScore = pointUIManager.GetMouseScore();
+
+        pointUIManager.UpdateScoreClientRpc(currentCatScore, currentMouseScore);
     }
 }
