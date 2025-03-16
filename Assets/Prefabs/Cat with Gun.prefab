@@ -996,7 +996,7 @@ MonoBehaviour:
   fpsCam: {fileID: 2307033721179350989}
   attackPoint: {fileID: 3278159878092836888}
   cameraHolder: {fileID: 1153477754060641206}
-  muzzleFlash: {fileID: 199458, guid: 51b76f616384d4946bed4ecc9a6c2c3e, type: 3}
+  muzzleFlash: {fileID: 8944746426717108876, guid: 7f9a5a9b870c74e6eb393619e9fe1e50, type: 3}
   ammunitionDisplay: {fileID: 9174000587559967108}
   playerRb: {fileID: 8188576189991350744}
   recoilForce: 25
