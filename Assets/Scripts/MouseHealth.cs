@@ -23,12 +23,6 @@ public class MouseHealth : NetworkBehaviour
 
             if (health <= 0f)
             {
-                // Update the score in PointUIManager if the entity dies
-                if (pointUIManager != null)
-                {
-                    pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
-                }
-
                 Debug.Log($"Entity Destroyed: health is {health}");
                 Destroy(gameObject);
             }
