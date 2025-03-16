@@ -13,10 +13,9 @@ public class PointUIManager : NetworkBehaviour
     [Header("Win Panel and Text")]
     [SerializeField] private GameObject winPanel;
     [SerializeField] private TextMeshProUGUI winnerText;
-
     [SerializeField] private Button playAgainButton;
 
-    // We'll track cat and mouse scores on the server
+    // cat and mouse scores on the server
     private int catScore;
     private int mouseScore;
 
@@ -49,13 +48,13 @@ public class PointUIManager : NetworkBehaviour
         }
 
         // Check for winner
-        if (catScore >= 10)
+        if (catScore == 10)
         {
             NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.GameOver);
             Debug.Log("Cat Wins !!");
             ShowWinPanelClientRpc("Cat");
         }
-        else if (mouseScore >= 10)
+        else if (mouseScore == 10)
         {
             NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.GameOver);
             Debug.Log("Mouse Wins !!");

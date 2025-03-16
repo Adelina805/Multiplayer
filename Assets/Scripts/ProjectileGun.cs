@@ -28,6 +28,7 @@ public class ProjectileGun : NetworkBehaviour
     // Graphics
     public GameObject muzzleFlash;
     public TextMeshProUGUI ammunitionDisplay;
+    [SerializeField] private GameObject crosshairText;
 
     // Recoil
     public Rigidbody playerRb;
@@ -66,10 +67,11 @@ public class ProjectileGun : NetworkBehaviour
         // If Cinemachine is not used, we track the cameraHolder for rotation
         PlayerCam = cameraHolder ? cameraHolder : fpsCam.transform;
 
-        // Hide ammo display if we are not the owner
+        // Hide ammo display and crosshair if we are not the owner
         if (!IsOwner && ammunitionDisplay != null)
         {
             ammunitionDisplay.gameObject.SetActive(false);
+            crosshairText.gameObject.SetActive(false);
         }
     }
 
