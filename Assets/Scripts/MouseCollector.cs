@@ -4,38 +4,22 @@ using TMPro;
 
 public class MouseCollector : NetworkBehaviour
 {
-    private NetworkVariable<int> score = new NetworkVariable<int>(0);
-    private PointUIManager uiManager; // Reference to the UI Manager
+    // Reference to the PointUIManager to update the score
+    private PointUIManager pointUIManager;
 
     private void Start()
     {
-        // Find the UI Manager in the scene
-        uiManager = FindObjectOfType<PointUIManager>();
+        // Find PointUIManager in the scene (this is done at runtime after the mouse is spawned)
+        pointUIManager = FindObjectOfType<PointUIManager>();
 
-        // Handle the change in score value (sync across clients)
-        score.OnValueChanged += (oldValue, newValue) =>
+        if (pointUIManager == null)
         {
-            if (IsOwner) 
-            {
-                // Get the current cat score from the UI manager
-                int currentCatScore = uiManager.GetCatScore();
-                uiManager.UpdateScoreClientRpc(currentCatScore, newValue);
-            }
-        };
-
-        // On start, if we're the owner, update UI for our current score
-        if (IsOwner)
-        {
-            // Get the current cat score from the UI manager
-            int currentCatScore = uiManager.GetCatScore();
-            uiManager.UpdateScoreClientRpc(currentCatScore, score.Value);
+            Debug.LogError("PointUIManager not found in the scene!");
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!IsOwner) return; // Only the owner should process collisions
-
         if (other.CompareTag("Cheese"))
         {
             NetworkObject cheeseNetworkObject = other.GetComponent<NetworkObject>();
@@ -70,6 +54,12 @@ public class MouseCollector : NetworkBehaviour
                 // Ensure the object is only despawned once
                 cheeseNetworkObject.Despawn(true);
                 Debug.Log($"Cheese with ID {cheeseId} despawned.");
+
+                // send to UI manager to update
+                if (pointUIManager != null)
+                {
+                    pointUIManager.AddMouseScoreServerRpc(1);
+                }
             }
             else
             {
@@ -80,12 +70,5 @@ public class MouseCollector : NetworkBehaviour
         {
             Debug.LogWarning($"Cheese object with ID {cheeseId} not found in SpawnManager.");
         }
-
-        // Increment score on the server
-        score.Value++;
-
-        // Get the current cat score from the UI manager
-        int currentCatScore = uiManager.GetCatScore();
-        uiManager.UpdateScoreClientRpc(currentCatScore, score.Value);
     }
 }

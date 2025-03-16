@@ -154,11 +154,8 @@ public class ProjectileGun : NetworkBehaviour
         // Use the gun’s transform rotation
         Quaternion muzzleRotation = attackPoint.rotation;
 
-        // NEW: Instead of calling the ClientRpc directly, request the server to handle it
+        // Request to Spawn muzzle flash on the server
         RequestMuzzleFlashServerRpc(attackPoint.position, muzzleRotation);
-
-        // // Spawn muzzle flash on the server
-        // SpawnMuzzleFlashClientRpc(attackPoint.position, muzzleRotation);
 
         // Add recoil to local player's RigidBody (one time only)
         if (allowInvoke)

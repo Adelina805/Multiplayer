@@ -58,55 +58,7 @@ public class MouseHealth : NetworkBehaviour
     }
 }
 
-// using UnityEngine;
-// using UnityEngine.UI;
-// using Unity.Netcode;
-// using TMPro;
-
-// public class MouseHealth : NetworkBehaviour
-// {
-//     [SerializeField] private float StartingHealth;
-//     private float health;
-
-//     // Reference to the PointUIManager to update the score
-//     [SerializeField] private PointUIManager pointUIManager;
-
-//     public float Health
-//     {
-//         get
-//         {
-//             return health;
-//         }
-//         set
-//         {
-//             health = value;
-//             Debug.Log($"Entity health: {health}");
-
-//             if (health <= 0f)
-//             {
-//                 // Update the score in PointUIManager if the entity dies
-//                 if (pointUIManager != null)
-//                 {
-//                     pointUIManager.AddCatScoreServerRpc(1);  // Increase cat's score by 1 
-//                 }
-
-//                 Destroy(gameObject);
-//             }
-//         }
-//     }
-
-//     void Start()
-//     {
-//         Health = StartingHealth;
-//     }
-
-//     // Call this method to apply damage to the entity and update the score
-//     public void TakeDamage(float damage)
-//     {
-//         Health -= damage;
-//     }
-// }
-
+// refference to this starter code:
 
 // using System.Collections;
 // using System.Collections.Generic;
