@@ -7,87 +7,93 @@ public class ProjectileGun : NetworkBehaviour
 {
     public UnityEvent OnGunShoot;
 
-    //bullet 
-    public GameObject bullet;
+    [Header("Prefabs")]
+    [SerializeField] private NetworkObject bulletPrefab; // Must have NetworkObject on bullet!
 
-    //bullet force
+    // bullet force
     public float shootForce, upwardForce;
 
-    //Gun stats
+    // Gun stats
     public float timeBetweenShooting, spread, reloadTime, timeBetweenShots;
     public int magazineSize, bulletsPerTap;
     public bool allowButtonHold;
 
-    int bulletsLeft, bulletsShot;
+    // References
+    public Camera fpsCam;             // Or Cinemachine camera
+    public Transform attackPoint;     // Where bullets spawn
+    [SerializeField] private Transform cameraHolder; // Possibly the parent of your camera
 
-    //Recoil
+    // Graphics
+    public GameObject muzzleFlash;
+    public TextMeshProUGUI ammunitionDisplay;
+
+    // Recoil
     public Rigidbody playerRb;
     public float recoilForce;
 
-    //bools
-    bool shooting, readyToShoot, reloading;
-
-    //Reference
-    public Camera fpsCam;
-    public Transform attackPoint;
-
+    // Private
     private Transform PlayerCam;
-    [SerializeField] private Transform cameraHolder;
+    private bool shooting, readyToShoot, reloading;
+    private int bulletsLeft, bulletsShot;
+    private bool allowInvoke = true;
+
+    private void Awake()
+    {
+        // Fill magazine
+        bulletsLeft = magazineSize;
+        readyToShoot = true;
+    }
 
     private void Start()
     {
-        PlayerCam = cameraHolder.transform;
+        // Possibly override this if Cinemachine is controlling the camera
+        // but cameraHolder is the transform we rotate
+        PlayerCam = cameraHolder ? cameraHolder : fpsCam.transform;
 
-        // If this gun is not owned by the local player, disable its ammo display UI
+        // Hide ammo display if we are not the owner
         if (!IsOwner && ammunitionDisplay != null)
         {
             ammunitionDisplay.gameObject.SetActive(false);
         }
     }
 
-    //Graphics
-    public GameObject muzzleFlash;
-    public TextMeshProUGUI ammunitionDisplay;
-
-    //bug fixing :D
-    public bool allowInvoke = true;
-
-    private void Awake()
-    {
-        //make sure magazine is full
-        bulletsLeft = magazineSize;
-        readyToShoot = true;
-    }
-
     private void Update()
     {
-        // Only run input logic if we're the local owner
+        // Only handle input if we own this gun
         if (!IsOwner) return;
 
         MyInput();
 
-        //Set ammo display, if it exists :D
+        // Update ammo display (local owner only)
         if (ammunitionDisplay != null)
-            ammunitionDisplay.SetText(bulletsLeft / bulletsPerTap + " / " + magazineSize / bulletsPerTap);
+        {
+            ammunitionDisplay.SetText(
+                $"{bulletsLeft / bulletsPerTap} / {magazineSize / bulletsPerTap}"
+            );
+        }
     }
 
     private void MyInput()
     {
-        //Check if allowed to hold down button and take corresponding input
-        if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
-        else shooting = Input.GetKeyDown(KeyCode.Mouse0);
+        // Check if allowed to hold down button
+        shooting = allowButtonHold ? Input.GetKey(KeyCode.Mouse0) : Input.GetKeyDown(KeyCode.Mouse0);
 
-        //Reloading 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
-        //Reload automatically when trying to shoot without ammo
-        if (readyToShoot && shooting && !reloading && bulletsLeft <= 0) Reload();
+        // Reload input
+        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading)
+        {
+            Reload();
+        }
 
-        //Shooting
+        // Auto reload if trying to shoot with no ammo
+        if (readyToShoot && shooting && !reloading && bulletsLeft <= 0)
+        {
+            Reload();
+        }
+
+        // Fire
         if (readyToShoot && shooting && !reloading && bulletsLeft > 0)
         {
-            //Set bullets shot to 0
-            bulletsShot = 0;
-
+            bulletsShot = 0; // reset shot counter
             Shoot();
         }
     }
@@ -95,66 +101,74 @@ public class ProjectileGun : NetworkBehaviour
     private void Shoot()
     {
         readyToShoot = false;
-
-        // detects damage
-        Debug.Log("pew");
         OnGunShoot?.Invoke();
+        Debug.Log("Pew!");
 
-        //Find the exact hit position using a raycast
+        // ---------------------------------------------
+        // 1) Raycast from camera to find target point
+        // ---------------------------------------------
+        // Use PlayerCam if that is truly your viewpoint,
+        // or fpsCam.transform if using a direct reference to the real camera.
         Ray ray = new Ray(PlayerCam.position, PlayerCam.forward);
-        //Ray ray = fpsCam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0)); //Just a ray through the middle of your current view
         RaycastHit hit;
-
-        //check if ray hits something
         Vector3 targetPoint;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
             targetPoint = hit.point;
+        }
         else
-            targetPoint = ray.GetPoint(75); //Just a point far away from the player
+        {
+            // If nothing is hit, pick a point far away in front
+            targetPoint = ray.GetPoint(100f);
+        }
 
-        //Calculate direction from attackPoint to targetPoint
+        // ---------------------------------------------
+        // 2) Compute direction from attackPoint to targetPoint
+        // ---------------------------------------------
         Vector3 directionWithoutSpread = targetPoint - attackPoint.position;
 
-        //Calculate spread
+        // ---------------------------------------------
+        // 3) Apply spread
+        // ---------------------------------------------
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
+        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0f);
 
-        //Calculate new direction with spread
-        Vector3 directionWithSpread = directionWithoutSpread + new Vector3(x, y, 0); //Just add spread to last direction
+        // ---------------------------------------------
+        // 4) Spawn bullet on the server
+        // ---------------------------------------------
+        // We pass in attackPoint.position as spawn position
+        // and directionWithSpread as forward direction
+        SpawnBulletServerRpc(attackPoint.position, directionWithSpread.normalized);
 
-        //Instantiate bullet/projectile
-        GameObject currentBullet = Instantiate(bullet, attackPoint.position, Quaternion.identity); //store instantiated bullet in currentBullet
-        //Rotate bullet to shoot direction
-        currentBullet.transform.forward = directionWithSpread.normalized;
-
-        //Add forces to bullet
-        currentBullet.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        currentBullet.GetComponent<Rigidbody>().AddForce(fpsCam.transform.up * upwardForce, ForceMode.Impulse);
-
-        //Instantiate muzzle flash, if you have one
+        // Instantiate muzzle flash locally if desired
         if (muzzleFlash != null)
+        {
             Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
+        }
 
+        // Subtract bullet and increment shot count
         bulletsLeft--;
         bulletsShot++;
 
-        //Invoke resetShot function (if not already invoked), with your timeBetweenShooting
+        // Add recoil to local player's RigidBody (one time only)
         if (allowInvoke)
         {
-            Invoke("ResetShot", timeBetweenShooting);
-            allowInvoke = false;
-
-            //Add recoil to player (should only be called once)
+            // Negative of bullet direction
             playerRb.AddForce(-directionWithSpread.normalized * recoilForce, ForceMode.Impulse);
+            Invoke(nameof(ResetShot), timeBetweenShooting);
+            allowInvoke = false;
         }
 
-        //if more than one bulletsPerTap make sure to repeat shoot function
+        // If we have multiple bulletsPerTap, keep firing
         if (bulletsShot < bulletsPerTap && bulletsLeft > 0)
-            Invoke("Shoot", timeBetweenShots);
+        {
+            Invoke(nameof(Shoot), timeBetweenShots);
+        }
     }
+
     private void ResetShot()
     {
-        //Allow shooting and invoking again
         readyToShoot = true;
         allowInvoke = true;
     }
@@ -162,13 +176,38 @@ public class ProjectileGun : NetworkBehaviour
     private void Reload()
     {
         reloading = true;
-        Invoke("ReloadFinished", reloadTime); //Invoke ReloadFinished function with your reloadTime as delay
+        Invoke(nameof(ReloadFinished), reloadTime);
     }
+
     private void ReloadFinished()
     {
-        //Fill magazine
         bulletsLeft = magazineSize;
         reloading = false;
     }
 
+    // -----------------------------
+    // ServerRPC for bullet spawn
+    // -----------------------------
+    [ServerRpc]
+    private void SpawnBulletServerRpc(Vector3 spawnPos, Vector3 bulletForward)
+    {
+        // Instantiate from the NetworkObject bullet prefab
+        NetworkObject bulletInstance = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+
+        // Orient bullet
+        bulletInstance.transform.forward = bulletForward;
+
+        // Spawn across all clients
+        bulletInstance.Spawn();
+
+        // If the bullet has a script that moves it (like physics),
+        // that script can be responsible for applying forces or movement.
+        // Or you could do it right here if you added a rigidbody to the bullet.
+        if (bulletInstance.TryGetComponent(out Rigidbody bulletRb))
+        {
+            // Server applies the force
+            bulletRb.AddForce(bulletForward * shootForce, ForceMode.Impulse);
+            bulletRb.AddForce(Vector3.up * upwardForce, ForceMode.Impulse);
+        }
+    }
 }
