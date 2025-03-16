@@ -94,6 +94,7 @@ public class Player : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
             Debug.Log("Jump!");
+            NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.Jump);
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z); // Reset vertical velocity
             rb.AddForce(Vector3.up * jumpForce / Time.fixedDeltaTime, ForceMode.Impulse);
         }

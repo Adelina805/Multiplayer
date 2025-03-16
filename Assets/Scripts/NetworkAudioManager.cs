@@ -4,6 +4,7 @@ using UnityEngine;
 public enum AudioClipID
 {
     GunShoot,
+    GunReload,
     Footsteps,
     Jump,
     CollectCheese,
@@ -18,11 +19,11 @@ public class NetworkAudioManager : NetworkBehaviour
     public static NetworkAudioManager Instance { get; private set; }
 
     [Header("Audio Source(s)")]
-    [SerializeField] private AudioSource musicSource;
     [SerializeField] private AudioSource sfxSource;
 
     [Header("Audio Clips (indexed by AudioClipID)")]
     [SerializeField] private AudioClip gunShootClip;
+    [SerializeField] private AudioClip gunReloadClip;
     [SerializeField] private AudioClip footstepsClip;
     [SerializeField] private AudioClip jumpClip;
     [SerializeField] private AudioClip collectCheeseClip;
@@ -47,6 +48,7 @@ public class NetworkAudioManager : NetworkBehaviour
         clipArray = new AudioClip[]
         {
             gunShootClip,
+            gunReloadClip,
             footstepsClip,
             jumpClip,
             collectCheeseClip,
@@ -56,21 +58,12 @@ public class NetworkAudioManager : NetworkBehaviour
         };
     }
 
-    private void Start()
-    {
-        // Example for continuous background music
-        if (musicSource && musicSource.clip)
-        {
-            musicSource.loop = true;
-            musicSource.Play();
-        }
-    }
-
     /// <summary>
     /// Called from anywhere in your code. Tells the server to broadcast the clip to all clients.
     /// </summary>
     public void PlaySoundGlobal(AudioClipID clipID)
     {
+        Debug.Log("PlayGlobalLocal called with clipID: " + clipID);
         // If we’re the server, play it immediately for everyone.
         if (IsServer)
         {
@@ -90,6 +83,7 @@ public class NetworkAudioManager : NetworkBehaviour
     /// </summary>
     public void PlaySoundLocal(AudioClipID clipID)
     {
+        Debug.Log("PlaySoundLocal called with clipID: " + clipID);
         var clip = clipArray[(int)clipID];
         if (clip && sfxSource)
         {

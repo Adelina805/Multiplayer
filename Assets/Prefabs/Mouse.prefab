@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 852484327
+  GlobalObjectIdHash: 4210439136
   InScenePlacedSourceGlobalObjectIdHash: 716042711
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -314,7 +314,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartingHealth: 10
-  pointUIManager: {fileID: 0}
 --- !u!1 &5859731773068890770
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +357,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4842216662427760971}
   - component: {fileID: 7625589728639053962}
-  - component: {fileID: 1846188406532073803}
   - component: {fileID: 730788133094299521}
   m_Layer: 0
   m_Name: Camera
@@ -433,14 +431,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1846188406532073803
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6323325591677571389}
-  m_Enabled: 0
 --- !u!114 &730788133094299521
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -54,6 +54,7 @@ public class MouseCollector : NetworkBehaviour
                 // Ensure the object is only despawned once
                 cheeseNetworkObject.Despawn(true);
                 Debug.Log($"Cheese with ID {cheeseId} despawned.");
+                NetworkAudioManager.Instance.PlaySoundLocal(AudioClipID.CollectCheese);
 
                 // send to UI manager to update
                 if (pointUIManager != null)

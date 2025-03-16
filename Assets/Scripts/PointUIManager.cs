@@ -51,11 +51,13 @@ public class PointUIManager : NetworkBehaviour
         // Check for winner
         if (catScore >= 10)
         {
+            NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.GameOver);
             Debug.Log("Cat Wins !!");
             ShowWinPanelClientRpc("Cat");
         }
         else if (mouseScore >= 10)
         {
+            NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.GameOver);
             Debug.Log("Mouse Wins !!");
             ShowWinPanelClientRpc("Mouse");
         }

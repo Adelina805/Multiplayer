@@ -23,6 +23,7 @@ public class MouseHealth : NetworkBehaviour
 
             if (health <= 0f)
             {
+                NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.MouseDeath);
                 Debug.Log($"Entity Destroyed: health is {health}");
                 Destroy(gameObject);
             }
@@ -46,6 +47,7 @@ public class MouseHealth : NetworkBehaviour
     public void TakeDamage(float damage)
     {
         Debug.Log("TakeDamage() called!");
+        NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.TakeDamage);
 
         // Grant the cat points equal to the damage taken
         if (pointUIManager != null)
