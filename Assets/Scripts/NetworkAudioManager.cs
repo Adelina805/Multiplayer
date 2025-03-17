@@ -76,9 +76,7 @@ public class NetworkAudioManager : NetworkBehaviour
         };
     }
 
-    /// <summary>
-    /// Called from anywhere in your code. Tells the server to broadcast the clip to all clients.
-    /// </summary>
+    /// Tells the server to broadcast the clip to all clients.
     public void PlaySoundGlobal(AudioClipID clipID)
     {
         Debug.Log("PlayGlobalLocal called with clipID: " + clipID);
@@ -94,20 +92,6 @@ public class NetworkAudioManager : NetworkBehaviour
             RequestPlaySoundServerRpc((int)clipID);
         }
     }
-
-    // /// <summary>
-    // /// Called if you only want to play a sound on this local client.
-    // /// Useful for local-only SFX like UI clicks, or your own footsteps if you prefer local-only handling.
-    // /// </summary>
-    // public void PlaySoundLocal(AudioClipID clipID)
-    // {
-    //     Debug.Log("PlaySoundLocal called with clipID: " + clipID);
-    //     var clip = clipArray[(int)clipID];
-    //     if (clip && sfxSource)
-    //     {
-    //         sfxSource.PlayOneShot(clip);
-    //     }
-    // }
 
     public void PlaySoundLocal(AudioClipID clipID)
     {
@@ -142,17 +126,4 @@ public class NetworkAudioManager : NetworkBehaviour
         // Validate clip index if needed
         PlaySoundClientRpc(clipIndex);
     }
-
-    // [ClientRpc]
-    // private void PlaySoundClientRpc(int clipIndex)
-    // {
-    //     if (clipIndex < 0 || clipIndex >= clipArray.Length)
-    //         return;
-
-    //     var clip = clipArray[clipIndex];
-    //     if (clip && sfxSource)
-    //     {
-    //         sfxSource.PlayOneShot(clip);
-    //     }
-    // }
 }
