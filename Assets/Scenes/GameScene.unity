@@ -1492,12 +1492,12 @@ MonoBehaviour:
   gunShootClip: {fileID: 8300000, guid: 736a6ee94d8a94aef925851d18125a0c, type: 3}
   gunPewClip: {fileID: 8300000, guid: 311347524c29a416f9eb107a7a1a6883, type: 3}
   gunReloadClip: {fileID: 8300000, guid: 2772cf3219e134290a1c4cc7f8ea2f58, type: 3}
-  footstepsClip: {fileID: 8300000, guid: 047ecce3cfe874e6b8266abf631d51a7, type: 3}
+  footstepsClip: {fileID: 8300000, guid: 3519e1b49b777a34d8674238d3c71350, type: 3}
   jumpClip: {fileID: 8300000, guid: 62fb1a5cce77a4e4caaa85d990b7302d, type: 3}
   collectCheeseClip: {fileID: 8300000, guid: b2f81bed3ff4d445aac35b294754b14f, type: 3}
-  takeDamageClip: {fileID: 8300000, guid: ae5ce305075544090b998b01bf995380, type: 3}
-  mouseDeathClip: {fileID: 8300000, guid: 17d5526e6b50943c696f33bfd65d5486, type: 3}
-  gameOverClip: {fileID: 8300000, guid: eac6bb333f58c43b59cbd3b1d769227d, type: 3}
+  takeDamageClip: {fileID: 8300000, guid: 17d5526e6b50943c696f33bfd65d5486, type: 3}
+  mouseDeathClip: {fileID: 8300000, guid: 704eed15cedfb4a2f8800cb0155329ae, type: 3}
+  gameOverClip: {fileID: 8300000, guid: e633c2f85f9b6478fa420fe51bad0fd5, type: 3}
 --- !u!82 &1054561909
 AudioSource:
   m_ObjectHideFlags: 0

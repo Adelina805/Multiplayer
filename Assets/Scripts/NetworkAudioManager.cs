@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using System.Collections.Generic;
 
 public enum AudioClipID
 {
@@ -32,6 +33,20 @@ public class NetworkAudioManager : NetworkBehaviour
     [SerializeField] private AudioClip takeDamageClip;
     [SerializeField] private AudioClip mouseDeathClip;
     [SerializeField] private AudioClip gameOverClip;
+
+    // clip volume levels
+    private Dictionary<AudioClipID, float> clipVolumes = new Dictionary<AudioClipID, float>
+    {
+        { AudioClipID.GunShoot, 0.2f },
+        { AudioClipID.GunPew, 0.1f },
+        { AudioClipID.GunReload, 0.1f },
+        { AudioClipID.Footsteps, 1.3f },
+        { AudioClipID.Jump, 0.4f },
+        { AudioClipID.CollectCheese, 0.1f },
+        { AudioClipID.TakeDamage, 0.4f },
+        { AudioClipID.MouseDeath, 0.4f },
+        { AudioClipID.GameOver, 1.0f }
+    };
 
     private AudioClip[] clipArray;
 
@@ -80,25 +95,29 @@ public class NetworkAudioManager : NetworkBehaviour
         }
     }
 
-    /// <summary>
-    /// Called if you only want to play a sound on this local client.
-    /// Useful for local-only SFX like UI clicks, or your own footsteps if you prefer local-only handling.
-    /// </summary>
+    // /// <summary>
+    // /// Called if you only want to play a sound on this local client.
+    // /// Useful for local-only SFX like UI clicks, or your own footsteps if you prefer local-only handling.
+    // /// </summary>
+    // public void PlaySoundLocal(AudioClipID clipID)
+    // {
+    //     Debug.Log("PlaySoundLocal called with clipID: " + clipID);
+    //     var clip = clipArray[(int)clipID];
+    //     if (clip && sfxSource)
+    //     {
+    //         sfxSource.PlayOneShot(clip);
+    //     }
+    // }
+
     public void PlaySoundLocal(AudioClipID clipID)
     {
         Debug.Log("PlaySoundLocal called with clipID: " + clipID);
         var clip = clipArray[(int)clipID];
         if (clip && sfxSource)
         {
-            sfxSource.PlayOneShot(clip);
+            float volume = clipVolumes.ContainsKey(clipID) ? clipVolumes[clipID] : 1.0f; // Default to full volume
+            sfxSource.PlayOneShot(clip, volume);
         }
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void RequestPlaySoundServerRpc(int clipIndex)
-    {
-        // Validate clip index if needed
-        PlaySoundClientRpc(clipIndex);
     }
 
     [ClientRpc]
@@ -110,7 +129,30 @@ public class NetworkAudioManager : NetworkBehaviour
         var clip = clipArray[clipIndex];
         if (clip && sfxSource)
         {
-            sfxSource.PlayOneShot(clip);
+            AudioClipID clipID = (AudioClipID)clipIndex;
+            float volume = clipVolumes.ContainsKey(clipID) ? clipVolumes[clipID] : 1.0f; // Default to full volume
+            sfxSource.PlayOneShot(clip, volume);
         }
     }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestPlaySoundServerRpc(int clipIndex)
+    {
+        // Validate clip index if needed
+        PlaySoundClientRpc(clipIndex);
+    }
+
+    // [ClientRpc]
+    // private void PlaySoundClientRpc(int clipIndex)
+    // {
+    //     if (clipIndex < 0 || clipIndex >= clipArray.Length)
+    //         return;
+
+    //     var clip = clipArray[clipIndex];
+    //     if (clip && sfxSource)
+    //     {
+    //         sfxSource.PlayOneShot(clip);
+    //     }
+    // }
 }
