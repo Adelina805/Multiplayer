@@ -173,46 +173,75 @@ public class Player : NetworkBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+        private void OnCollisionEnter(Collision collision)
     {
         if (!IsOwner) return;
 
-        if (collision.gameObject.CompareTag("Cheese"))
+        if (collision.gameObject.CompareTag("Cheese") || collision.gameObject.CompareTag("Object"))
         {
-            NetworkObject cheeseNetworkObject = collision.gameObject.GetComponent<NetworkObject>();
+            NetworkObject networkObject = collision.gameObject.GetComponent<NetworkObject>();
 
-            if (cheeseNetworkObject != null && cheeseNetworkObject.IsSpawned)
+            if (networkObject != null && networkObject.IsSpawned)
             {
-                // allows client to interact and move cheese
-                RequestCheeseOwnershipServerRpc(cheeseNetworkObject);
-
-                // Only proceed if the object is spawned
-                try
-                {
-                    NetworkObjectReference cheeseReference = cheeseNetworkObject;
-                    // Further processing with cheeseReference
-                }
-                catch (ArgumentException ex)
-                {
-                    Debug.LogError($"Error creating NetworkObjectReference for {cheeseNetworkObject.name}: {ex.Message}");
-                }
+                RequestOwnershipServerRpc(networkObject);
             }
             else
             {
-                Debug.LogWarning("Cheese object is either not found or not spawned.");
+                Debug.LogWarning("Object is either not found or not spawned.");
             }
         }
     }
 
-    // allow client to interact with cheese
+    // allow client to interact with objects and cheese
     [ServerRpc]
-    private void RequestCheeseOwnershipServerRpc(NetworkObjectReference cheeseReference, ServerRpcParams rpcParams = default)
+    private void RequestOwnershipServerRpc(NetworkObjectReference objectReference, ServerRpcParams rpcParams = default)
     {
-        if (cheeseReference.TryGet(out NetworkObject cheeseObject))
+        if (objectReference.TryGet(out NetworkObject networkObject))
         {
-            cheeseObject.ChangeOwnership(rpcParams.Receive.SenderClientId);
+            networkObject.ChangeOwnership(rpcParams.Receive.SenderClientId);
         }
     }
+
+    // private void OnCollisionEnter(Collision collision)
+    // {
+    //     if (!IsOwner) return;
+
+    //     if (collision.gameObject.CompareTag("Cheese") )
+    //     {
+    //         NetworkObject cheeseNetworkObject = collision.gameObject.GetComponent<NetworkObject>();
+
+    //         if (cheeseNetworkObject != null && cheeseNetworkObject.IsSpawned)
+    //         {
+    //             // allows client to interact and move cheese
+    //             RequestCheeseOwnershipServerRpc(cheeseNetworkObject);
+
+    //             // Only proceed if the object is spawned
+    //             try
+    //             {
+    //                 NetworkObjectReference cheeseReference = cheeseNetworkObject;
+    //                 // Further processing with cheeseReference
+    //             }
+    //             catch (ArgumentException ex)
+    //             {
+    //                 Debug.LogError($"Error creating NetworkObjectReference for {cheeseNetworkObject.name}: {ex.Message}");
+    //             }
+    //         }
+    //         else
+    //         {
+    //             Debug.LogWarning("Cheese object is either not found or not spawned.");
+    //         }
+    //     }
+    // }
+
+    // // allow client to interact with cheese
+    // [ServerRpc]
+    // private void RequestCheeseOwnershipServerRpc(NetworkObjectReference cheeseReference, ServerRpcParams rpcParams = default)
+    // {
+    //     if (cheeseReference.TryGet(out NetworkObject cheeseObject))
+    //     {
+    //         cheeseObject.ChangeOwnership(rpcParams.Receive.SenderClientId);
+    //     }
+    // }
 
     // get current score on start
     [ServerRpc(RequireOwnership = false)]
