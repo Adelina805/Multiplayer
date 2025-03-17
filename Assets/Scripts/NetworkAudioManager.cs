@@ -4,6 +4,7 @@ using UnityEngine;
 public enum AudioClipID
 {
     GunShoot,
+    GunPew,
     GunReload,
     Footsteps,
     Jump,
@@ -23,6 +24,7 @@ public class NetworkAudioManager : NetworkBehaviour
 
     [Header("Audio Clips (indexed by AudioClipID)")]
     [SerializeField] private AudioClip gunShootClip;
+    [SerializeField] private AudioClip gunPewClip;
     [SerializeField] private AudioClip gunReloadClip;
     [SerializeField] private AudioClip footstepsClip;
     [SerializeField] private AudioClip jumpClip;
@@ -48,6 +50,7 @@ public class NetworkAudioManager : NetworkBehaviour
         clipArray = new AudioClip[]
         {
             gunShootClip,
+            gunPewClip,
             gunReloadClip,
             footstepsClip,
             jumpClip,

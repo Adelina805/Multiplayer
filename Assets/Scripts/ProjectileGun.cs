@@ -124,6 +124,7 @@ public class ProjectileGun : NetworkBehaviour
         readyToShoot = false;
         OnGunShoot?.Invoke();
         NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.GunShoot);
+        NetworkAudioManager.Instance.PlaySoundGlobal(AudioClipID.GunPew);
         Debug.Log("Pew!");
 
         // Raycast from camera to find target point
