@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1145078430
+  GlobalObjectIdHash: 4210439136
   InScenePlacedSourceGlobalObjectIdHash: 716042711
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -277,8 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48874d4ce1b9e4788ada2e34baaef1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  jumpForce: 2.5
+  speed: 11
+  jumpForce: 3.1
   mouseSensitivity: 300
   inputNameHorizontal: Horizontal
   inputNameVertical: Vertical

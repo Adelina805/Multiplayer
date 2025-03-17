@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 233896884171495467}
   - component: {fileID: 8901020012378902803}
   - component: {fileID: 6667969305132737787}
+  - component: {fileID: 5013027586455283185}
   - component: {fileID: 6942867630371943426}
   - component: {fileID: 4172660327238741327}
   - component: {fileID: 985961953069707839}
@@ -112,8 +113,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.41722107, y: 0.6569816, z: 1.0542908}
-  m_Center: {x: -0.005428314, y: 0.07842535, z: -0.027145386}
+  m_Size: {x: 0.47444907, y: 0.6569816, z: 1.0542908}
+  m_Center: {x: 0.023185685, y: 0.07842535, z: -0.027145386}
 --- !u!65 &6667969305132737787
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -135,6 +136,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.41322726, y: 1.3413432, z: 0.37597382}
   m_Center: {x: -0.004218787, y: -0.25392607, z: 0.6299986}
+--- !u!65 &5013027586455283185
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 370267294254599304}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.46199203, y: 0.7235805, z: 0.73821294}
+  m_Center: {x: -0.0028438866, y: 0.5463743, z: 0.913771}
 --- !u!114 &6942867630371943426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1765138892
+  GlobalObjectIdHash: 1407234863
   InScenePlacedSourceGlobalObjectIdHash: 404824975
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -212,7 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpForce: 2.5
+  jumpForce: 3.1
   mouseSensitivity: 300
   inputNameHorizontal: Horizontal
   inputNameVertical: Vertical
@@ -1122,7 +1144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 815835197
+  GlobalObjectIdHash: 1407234863
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
